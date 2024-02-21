@@ -106,7 +106,7 @@ fi
 
 # The prysm bootstrap node is set after the first loop, as the first
 # node is the bootstrap node. This is used for consensus client discovery
-PRYSM_BOOTSTRAP_NODE=enr:-MK4QDXhlFZK6oU0DfNrycyLt3GYCFuimxSNnLDhQMeeQfXsD97QFJWfCZW1c5Oe4FQeJg_nZMUwwQ_AIZL6dcl7VeWGAY3FvzOVh2F0dG5ldHOIAADAAAAAAACEZXRoMpBfrVqYIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQPWoZwkMVG-W9COf8zO0YR7KVXPjkVb_DfkifRGuIfI4ohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA
+PRYSM_BOOTSTRAP_NODE=enr:-MK4QAYcrV10MMpENQ1Y7s6luKZk-sOpqWjycnCrRWT4xpdmYLpxVT9mVzKGouoFPGwpA7Wd0nYManjAFd2aldAmRJyGAY3LQ07Yh2F0dG5ldHOIAAAAwAAAAACEZXRoMpBfrVqYIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQOrf7_4SoJ04dPiA-10-if35tKl87v_3d4VMq6WOTl6Y4hzeW5jbmV0cwCDdGNwghBog3VkcIIQzA
 # Calculate how many nodes to wait for to be in sync with. Not a hard rule
 MIN_SYNC_PEERS=1
 echo $MIN_SYNC_PEERS is minimum number of synced peers required
@@ -164,7 +164,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --syncmode=full \
       --nodiscover \
       --cache=1028 \
-      --bootnodes= \
+      --bootnodes=enode://fa8f39dd283b5ead10652f007e5b48826487401e252e0acefc3d82a0bbcda7e51c5e21469d6343ebd6e965a200bb32808ef35524ecf69f02dfb21143730a08a7@4.240.105.79:8400 \
       --rpc.allow-unprotected-txs \
       --nat extip:20.244.97.158 > "$NODE_DIR/logs/geth.log" 2>&1 &
 
@@ -174,8 +174,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     $PRYSM_BEACON_BINARY \
       --datadir=$NODE_DIR/consensus/beacondata \
       --min-sync-peers=1 \
-      --genesis-state=$NODE_DIR/consensus/genesis.ssz \
-      --bootstrap-node=enr:-MK4QDXhlFZK6oU0DfNrycyLt3GYCFuimxSNnLDhQMeeQfXsD97QFJWfCZW1c5Oe4FQeJg_nZMUwwQ_AIZL6dcl7VeWGAY3FvzOVh2F0dG5ldHOIAADAAAAAAACEZXRoMpBfrVqYIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQPWoZwkMVG-W9COf8zO0YR7KVXPjkVb_DfkifRGuIfI4ohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
+      --bootstrap-node=enr:-MK4QAYcrV10MMpENQ1Y7s6luKZk-sOpqWjycnCrRWT4xpdmYLpxVT9mVzKGouoFPGwpA7Wd0nYManjAFd2aldAmRJyGAY3LQ07Yh2F0dG5ldHOIAAAAwAAAAACEZXRoMpBfrVqYIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQOrf7_4SoJ04dPiA-10-if35tKl87v_3d4VMq6WOTl6Y4hzeW5jbmV0cwCDdGNwghBog3VkcIIQzA \
       --interop-eth1data-votes \
       --chain-config-file=$NODE_DIR/consensus/config.yml \
       --contract-deployment-block=0 \
