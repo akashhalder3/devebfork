@@ -125,7 +125,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     # Copy the same genesis and inital config the node's directories
     # All nodes must have the same genesis otherwise they will reject eachother
     cp ./config.yml $NODE_DIR/consensus/config.yml
-    cp ./genesis.ssz $NODE_DIR/consensus/genesis.ssz
+    # cp ./genesis.ssz $NODE_DIR/consensus/genesis.ssz
     cp ./genesis.json $NODE_DIR/execution/genesis.json
     cp -r /home/azureuser/staking_deposit-cli-fdab65d-linux-amd64/keystore $NODE_DIR/execution
     # Create the secret keys for this node and other account details
