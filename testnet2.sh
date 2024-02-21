@@ -106,7 +106,7 @@ fi
 
 # The prysm bootstrap node is set after the first loop, as the first
 # node is the bootstrap node. This is used for consensus client discovery
-PRYSM_BOOTSTRAP_NODE=enr:-MK4QNVDZ3EYlaYBEm1-zJcEbMptpqhpw2-YPXLTRcDvNJoKGyD0DP47HEhXWCDhPBl0--plrm_dWer89AVDEC2f2YqGAY3LQ07Zh2F0dG5ldHOIAAAAwAAAAACEZXRoMpBfrVqYIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQOrf7_4SoJ04dPiA-10-if35tKl87v_3d4VMq6WOTl6Y4hzeW5jbmV0cw-DdGNwghBog3VkcIIQzA
+PRYSM_BOOTSTRAP_NODE=enr:-MK4QA1FestbUkUD3OxbRrObOau4OeRwrSjeYm1EIp0wcWNFPFHMnobnEVJ70zjh4N_5EabcQmvIYuSDjNFzTozWvF-GAY3LbhVEh2F0dG5ldHOIAAAAAAAAwACEZXRoMpBfrVqYIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQMdnziCQ_NxisPOFI1ugRrWrqA2pGWhXzp8JD8CFE3fcYhzeW5jbmV0cw-DdGNwghBog3VkcIIQzA
 # Calculate how many nodes to wait for to be in sync with. Not a hard rule
 MIN_SYNC_PEERS=1
 echo $MIN_SYNC_PEERS is minimum number of synced peers required
@@ -134,7 +134,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     # Initialize geth for this node. Geth uses the genesis.json to write some initial state
     $GETH_BINARY init \
       --datadir=$NODE_DIR/execution \
-      $NODE_DIR/execution/genesis.json
+      $NODE_DIR/execution/genesis2.json
 
     # Start geth execution client for this node
     $GETH_BINARY \
@@ -164,7 +164,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --syncmode=full \
       --nodiscover \
       --cache=1028 \
-      --bootnodes=enode://fa8f39dd283b5ead10652f007e5b48826487401e252e0acefc3d82a0bbcda7e51c5e21469d6343ebd6e965a200bb32808ef35524ecf69f02dfb21143730a08a7@4.240.105.79:8400 \
+      --bootnodes=enode://0b9bb513451a7d1cae89c8d3f323831055bba436990d090b98f226311652202f59d8ac00c170610e1dd57e7ba21c3c5c1a2bfc04bcffa9e06398b0911b0d9d8a@4.240.105.79:8400 \
       --rpc.allow-unprotected-txs \
       --nat extip:20.244.97.158 > "$NODE_DIR/logs/geth.log" 2>&1 &
 
@@ -175,7 +175,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --datadir=$NODE_DIR/consensus/beacondata \
       --min-sync-peers=1 \
       --genesis-beacon-api-url=http://4.240.105.79:4100 \
-      --bootstrap-node=enr:-MK4QNVDZ3EYlaYBEm1-zJcEbMptpqhpw2-YPXLTRcDvNJoKGyD0DP47HEhXWCDhPBl0--plrm_dWer89AVDEC2f2YqGAY3LQ07Zh2F0dG5ldHOIAAAAwAAAAACEZXRoMpBfrVqYIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQOrf7_4SoJ04dPiA-10-if35tKl87v_3d4VMq6WOTl6Y4hzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
+      --bootstrap-node=enr:-MK4QA1FestbUkUD3OxbRrObOau4OeRwrSjeYm1EIp0wcWNFPFHMnobnEVJ70zjh4N_5EabcQmvIYuSDjNFzTozWvF-GAY3LbhVEh2F0dG5ldHOIAAAAAAAAwACEZXRoMpBfrVqYIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQMdnziCQ_NxisPOFI1ugRrWrqA2pGWhXzp8JD8CFE3fcYhzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
       --interop-eth1data-votes \
       --chain-config-file=$NODE_DIR/consensus/config.yml \
       --contract-deployment-block=0 \
