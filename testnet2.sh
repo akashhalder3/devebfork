@@ -187,7 +187,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --execution-endpoint=http://localhost:$((GETH_AUTH_RPC_PORT + i)) \
       --accept-terms-of-use \
       --jwt-secret=$NODE_DIR/execution/jwtsecret \
-      --suggested-fee-recipient=0x123463a4b065722e99115d6c222f267d9cabb524 \
+      --suggested-fee-recipient=0xfe94A38BC902A9E094F2a3bE369F33eEe6E57e60 \
       --minimum-peers-per-subnet=0 \
       --p2p-host-ip=20.244.97.158 \
       --p2p-tcp-port=$((PRYSM_BEACON_P2P_TCP_PORT + i)) \
