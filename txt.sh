@@ -19,7 +19,7 @@ fi
 NETWORK_DIR=./network
 
 # Change this number for your desired number of nodes
-NUM_NODES=1
+NUM_NODES=2
 
 # Port information. All ports will be incremented upon
 # with more validators to prevent port conflicts on a single machine
@@ -54,7 +54,6 @@ trap 'cleanup' SIGINT
 
 # Reset the data from any previous runs and kill any hanging runtimes
 rm -rf "$NETWORK_DIR" || echo "no network directory"
-
 mkdir -p $NETWORK_DIR
 pkill geth || echo "No existing geth processes"
 pkill beacon-chain || echo "No existing beacon-chain processes"
@@ -66,9 +65,9 @@ pkill bootnode || echo "No existing bootnode processes"
 GETH_BINARY=./dependencies/go-ethereum/build/bin/geth
 GETH_BOOTNODE_BINARY=./dependencies/go-ethereum/build/bin/bootnode
 
-PRYSM_CTL_BINARY=./dependencies/prysm/out/prysmctl
-PRYSM_BEACON_BINARY=./dependencies/prysm/out/beacon-chain
-PRYSM_VALIDATOR_BINARY=./dependencies/prysm/out/validator
+PRYSM_CTL_BINARY=./dependencies/prysm/bazel-bin/cmd/prysmctl/prysmctl_/prysmctl
+PRYSM_BEACON_BINARY=./dependencies/prysm/bazel-bin/cmd/beacon-chain/beacon-chain_/beacon-chain
+PRYSM_VALIDATOR_BINARY=./dependencies/prysm/bazel-bin/cmd/validator/validator_/validator
 
 # Create the bootnode for execution client peer discovery. 
 # Not a production grade bootnode. Does not do peer discovery for consensus client
@@ -95,20 +94,21 @@ fi
 
 # Generate the genesis. This will generate validators based
 # on https://github.com/ethereum/eth2.0-pm/blob/a085c9870f3956d6228ed2a40cd37f0c6580ecd7/interop/mocked_start/README.md
-# $PRYSM_CTL_BINARY testnet generate-genesis \
-# --fork=deneb \
-# --num-validators=$NUM_NODES \
-# --chain-config-file=./config.yml \
-# --geth-genesis-json-in=./genesis.json \
-# --output-ssz=$NETWORK_DIR/genesis.ssz \
-# --geth-genesis-json-out=$NETWORK_DIR/genesis.json
+$PRYSM_CTL_BINARY testnet generate-genesis \
+--fork=deneb \
+--num-validators=$NUM_NODES \
+--chain-config-file=./config.yml \
+--geth-genesis-json-in=./genesis.json \
+--output-ssz=$NETWORK_DIR/genesis.ssz \
+--geth-genesis-json-out=$NETWORK_DIR/genesis.json
 
 
 # The prysm bootstrap node is set after the first loop, as the first
 # node is the bootstrap node. This is used for consensus client discovery
-PRYSM_BOOTSTRAP_NODE=enr:-MK4QI7pvr-yFncnuopAGHdXo4Y8-lEhT9naz2TwxPqPWe1OBzxO8z-8Nyijvvn4MYhCJjo7YKZiSY2VYKtFqWQtDe2GAY3P4cPWh2F0dG5ldHOIgAEAAAAAAACEZXRoMpCdcTZPIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQKAMKiPpoNvKmCEW1kaPHjMKJwOxkbYsRaBlx1NR2va6ohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA
+PRYSM_BOOTSTRAP_NODE=
+
 # Calculate how many nodes to wait for to be in sync with. Not a hard rule
-MIN_SYNC_PEERS=1
+MIN_SYNC_PEERS=$((NUM_NODES/2))
 echo $MIN_SYNC_PEERS is minimum number of synced peers required
 
 # Create the validators in a loop
@@ -125,11 +125,11 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     # Copy the same genesis and inital config the node's directories
     # All nodes must have the same genesis otherwise they will reject eachother
     cp ./config.yml $NODE_DIR/consensus/config.yml
-    # cp ./genesis.ssz $NODE_DIR/consensus/genesis.ssz
-    cp ./genesis.json $NODE_DIR/execution/
-    cp -r ./keystore $NODE_DIR/execution
+    cp $NETWORK_DIR/genesis.ssz $NODE_DIR/consensus/genesis.ssz
+    cp $NETWORK_DIR/genesis.json $NODE_DIR/execution/genesis.json
+
     # Create the secret keys for this node and other account details
-    # $GETH_BINARY account new --datadir "$NODE_DIR/execution" --password "$geth_pw_file"
+    $GETH_BINARY account new --datadir "$NODE_DIR/execution" --password "$geth_pw_file"
 
     # Initialize geth for this node. Geth uses the genesis.json to write some initial state
     $GETH_BINARY init \
@@ -140,14 +140,14 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     $GETH_BINARY \
       --networkid=${CHAIN_ID:-32382} \
       --http \
-      --http.api=eth,net,web3,debug,txpool \
+      --http.api=eth,net,web3,txpool \
       --http.addr=0.0.0.0 \
       --http.corsdomain="*" \
       --http.port=$((GETH_HTTP_PORT + i)) \
       --port=$((GETH_NETWORK_PORT + i)) \
       --metrics.port=$((GETH_METRICS_PORT + i)) \
       --ws \
-      --ws.api=eth,net,web3,debug,txpool \
+      --ws.api=eth,net,web3 \
       --ws.addr=0.0.0.0 \
       --ws.origins="*" \
       --ws.port=$((GETH_WS_PORT + i)) \
@@ -162,19 +162,16 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --maxpendpeers=$NUM_NODES \
       --verbosity=3 \
       --syncmode=full \
-      --nodiscover \
-      --cache=1028 \
-      --rpc.allow-unprotected-txs \
-      --nat extip:4.240.105.79 > "$NODE_DIR/logs/geth.log" 2>&1 &
+      --nat extip:20.244.97.158 > "$NODE_DIR/logs/geth.log" 2>&1 &
 
     sleep 5
 
     # Start prysm consensus client for this node
     $PRYSM_BEACON_BINARY \
       --datadir=$NODE_DIR/consensus/beacondata \
-      --min-sync-peers=1 \
-      --genesis-beacon-api-url=http://20.244.97.158:4100 \
-      --bootstrap-node=enr:-MK4QI7pvr-yFncnuopAGHdXo4Y8-lEhT9naz2TwxPqPWe1OBzxO8z-8Nyijvvn4MYhCJjo7YKZiSY2VYKtFqWQtDe2GAY3P4cPWh2F0dG5ldHOIgAEAAAAAAACEZXRoMpCdcTZPIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQKAMKiPpoNvKmCEW1kaPHjMKJwOxkbYsRaBlx1NR2va6ohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
+      --min-sync-peers=$MIN_SYNC_PEERS \
+      --genesis-state=$NODE_DIR/consensus/genesis.ssz \
+      --bootstrap-node=$PRYSM_BOOTSTRAP_NODE \
       --interop-eth1data-votes \
       --chain-config-file=$NODE_DIR/consensus/config.yml \
       --contract-deployment-block=0 \
@@ -186,7 +183,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --execution-endpoint=http://localhost:$((GETH_AUTH_RPC_PORT + i)) \
       --accept-terms-of-use \
       --jwt-secret=$NODE_DIR/execution/jwtsecret \
-      --suggested-fee-recipient=0xfe94A38BC902A9E094F2a3bE369F33eEe6E57e60 \
+      --suggested-fee-recipient=0x123463a4b065722e99115d6c222f267d9cabb524 \
       --minimum-peers-per-subnet=0 \
       --p2p-host-ip=20.244.97.158 \
       --p2p-tcp-port=$((PRYSM_BEACON_P2P_TCP_PORT + i)) \
@@ -198,14 +195,25 @@ for (( i=0; i<$NUM_NODES; i++ )); do
 
     # Start prysm validator for this node. Each validator node will
     # manage 1 validator
-    ./dependencies/prysm/out/validator --beacon-rpc-provider=localhost:4000 --datadir=./network/node-0/consensus/validatordata --accept-terms-of-use --interop-num-validators=64 --interop-start-index=0 --rpc-port=7000 --grpc-gateway-port=7100 --monitoring-port=7200 --chain-config-file=./network/node-0/consensus/config.yml > "$NODE_DIR/logs/validator.log" 2>&1 &
+    $PRYSM_VALIDATOR_BINARY \
+      --beacon-rpc-provider=localhost:$((PRYSM_BEACON_RPC_PORT + i)) \
+      --datadir=$NODE_DIR/consensus/validatordata \
+      --accept-terms-of-use \
+      --interop-num-validators=1 \
+      --interop-start-index=$i \
+      --rpc-port=$((PRYSM_VALIDATOR_RPC_PORT + i)) \
+      --grpc-gateway-port=$((PRYSM_VALIDATOR_GRPC_GATEWAY_PORT + i)) \
+      --monitoring-port=$((PRYSM_VALIDATOR_MONITORING_PORT + i)) \
+      --graffiti="node-$i" \
+      --chain-config-file=$NODE_DIR/consensus/config.yml > "$NODE_DIR/logs/validator.log" 2>&1 &
+
 
     # Check if the PRYSM_BOOTSTRAP_NODE variable is already set
     if [[ -z "${PRYSM_BOOTSTRAP_NODE}" ]]; then
         sleep 5 # sleep to let the prysm node set up
         # If PRYSM_BOOTSTRAP_NODE is not set, execute the command and capture the result into the variable
         # This allows subsequent nodes to discover the first node, treating it as the bootnode
-        PRYSM_BOOTSTRAP_NODE=$(curl -s http://20.244.97.158:4100/eth/v1/node/identity | jq -r '.data.enr')
+        PRYSM_BOOTSTRAP_NODE=$(curl -s localhost:4100/eth/v1/node/identity | jq -r '.data.enr')
             # Check if the result starts with enr
         if [[ $PRYSM_BOOTSTRAP_NODE == enr* ]]; then
             echo "PRYSM_BOOTSTRAP_NODE is valid: $PRYSM_BOOTSTRAP_NODE"
@@ -218,4 +226,4 @@ done
 
 # You might want to change this if you want to tail logs for other nodes
 # Logs for all nodes can be found in `./network/node-*/logs`
-# tail -f "$NETWORK_DIR/node-0/logs/geth.log"
+tail -f "$NETWORK_DIR/node-0/logs/geth.log"
