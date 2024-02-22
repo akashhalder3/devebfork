@@ -106,7 +106,7 @@ fi
 
 # The prysm bootstrap node is set after the first loop, as the first
 # node is the bootstrap node. This is used for consensus client discovery
-PRYSM_BOOTSTRAP_NODE=enr:-MK4QI7pvr-yFncnuopAGHdXo4Y8-lEhT9naz2TwxPqPWe1OBzxO8z-8Nyijvvn4MYhCJjo7YKZiSY2VYKtFqWQtDe2GAY3P4cPWh2F0dG5ldHOIgAEAAAAAAACEZXRoMpCdcTZPIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQKAMKiPpoNvKmCEW1kaPHjMKJwOxkbYsRaBlx1NR2va6ohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA
+PRYSM_BOOTSTRAP_NODE=enr:-MK4QGdsyRUDfAE03jVgY9VVJRAZyS1JDu2N5rceDvhDOu4WaxCiAnRLvPRbskCgDrybMLhfltDZ87AMEue6yI0_gt6GAY3P9Vbeh2F0dG5ldHOIAAAAAAAwAACEZXRoMpCdcTZPIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQKp1Xmm6_1GzI07qxJ9cfgTP5A7HRjZUp60kNstbY62zohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA
 # Calculate how many nodes to wait for to be in sync with. Not a hard rule
 MIN_SYNC_PEERS=1
 echo $MIN_SYNC_PEERS is minimum number of synced peers required
@@ -174,7 +174,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --datadir=$NODE_DIR/consensus/beacondata \
       --min-sync-peers=1 \
       --genesis-beacon-api-url=http://20.244.97.158:4100 \
-      --bootstrap-node=enr:-MK4QI7pvr-yFncnuopAGHdXo4Y8-lEhT9naz2TwxPqPWe1OBzxO8z-8Nyijvvn4MYhCJjo7YKZiSY2VYKtFqWQtDe2GAY3P4cPWh2F0dG5ldHOIgAEAAAAAAACEZXRoMpCdcTZPIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQKAMKiPpoNvKmCEW1kaPHjMKJwOxkbYsRaBlx1NR2va6ohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
+      --bootstrap-node=enr:-MK4QGdsyRUDfAE03jVgY9VVJRAZyS1JDu2N5rceDvhDOu4WaxCiAnRLvPRbskCgDrybMLhfltDZ87AMEue6yI0_gt6GAY3P9Vbeh2F0dG5ldHOIAAAAAAAwAACEZXRoMpCdcTZPIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQKp1Xmm6_1GzI07qxJ9cfgTP5A7HRjZUp60kNstbY62zohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
       --interop-eth1data-votes \
       --chain-config-file=$NODE_DIR/consensus/config.yml \
       --contract-deployment-block=0 \
@@ -198,7 +198,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
 
     # Start prysm validator for this node. Each validator node will
     # manage 1 validator
-    ./dependencies/prysm/out/validator --beacon-rpc-provider=localhost:4000 --datadir=./network/node-0/consensus/validatordata --accept-terms-of-use --interop-num-validators=64 --interop-start-index=0 --rpc-port=7000 --grpc-gateway-port=7100 --monitoring-port=7200 --chain-config-file=./network/node-0/consensus/config.yml > "$NODE_DIR/logs/validator.log" 2>&1 &
+    # ./dependencies/prysm/out/validator --beacon-rpc-provider=localhost:4000 --datadir=./network/node-0/consensus/validatordata --accept-terms-of-use --interop-num-validators=64 --interop-start-index=0 --rpc-port=7000 --grpc-gateway-port=7100 --monitoring-port=7200 --chain-config-file=./network/node-0/consensus/config.yml > "$NODE_DIR/logs/validator.log" 2>&1 &
 
     # Check if the PRYSM_BOOTSTRAP_NODE variable is already set
     if [[ -z "${PRYSM_BOOTSTRAP_NODE}" ]]; then
