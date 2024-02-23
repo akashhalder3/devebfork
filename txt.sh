@@ -140,7 +140,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     $GETH_BINARY \
       --networkid=${CHAIN_ID:-32382} \
       --http \
-      --http.api=eth,net,web3,txpool \
+      --http.api=engine,eth,web3,net,debug,flashbots \
       --http.addr=0.0.0.0 \
       --http.corsdomain="*" \
       --http.port=$((GETH_HTTP_PORT + i)) \
@@ -156,11 +156,25 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --authrpc.jwtsecret=$NODE_DIR/execution/jwtsecret \
       --authrpc.port=$((GETH_AUTH_RPC_PORT + i)) \
       --datadir=$NODE_DIR/execution \
+      --allow-insecure-unlock \
+      --unlock=0x123463a4b065722e99115d6c222f267d9cabb524 \
+      --nodiscover \
+      --mine \
+      --builder \
+      --builder.local_relay=true \
+      --builder.secret_key=0x2e0834786285daccd064ca17f1654f67b4aef298acbb82cef9ec422fb4975622 \
+      --builder.relay_secret_key=0x2e0834786285daccd064ca17f1654f67b4aef298acbb82cef9ec422fb4975622
+      --builder.genesis_validators_root=0x83431ec7fcf92cfc44947fc0418e831c25e1d0806590231c439830db7ad54fda \
+      --builder.genesis_fork_version=0x20000089 \
+      --builder.bellatrix_fork_version=0x20000091 \
+      --miner.algotype=greedy \
+      --builder.beacon_endpoint=http://beacon-chain:3500 \
+      --miner.algotype=greedy
       --password=$geth_pw_file \
       --bootnodes=$bootnode_enode \
       --identity=node-$i \
       --maxpendpeers=$NUM_NODES \
-      --verbosity=3 \
+      --verbosity=5 \
       --syncmode=full \
       --nat extip:20.244.97.158 > "$NODE_DIR/logs/geth.log" 2>&1 &
 
@@ -191,6 +205,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --monitoring-port=$((PRYSM_BEACON_MONITORING_PORT + i)) \
       --verbosity=info \
       --slasher \
+      --http-mev-relay=http://geth:28545 \
       --enable-debug-rpc-endpoints > "$NODE_DIR/logs/beacon.log" 2>&1 &
 
     # Start prysm validator for this node. Each validator node will
@@ -205,6 +220,8 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --grpc-gateway-port=$((PRYSM_VALIDATOR_GRPC_GATEWAY_PORT + i)) \
       --monitoring-port=$((PRYSM_VALIDATOR_MONITORING_PORT + i)) \
       --graffiti="node-$i" \
+      --suggested-fee-recipient=0x123463a4b065722e99115d6c222f267d9cabb524 \
+      --enable-builder \
       --chain-config-file=$NODE_DIR/consensus/config.yml > "$NODE_DIR/logs/validator.log" 2>&1 &
 
 
