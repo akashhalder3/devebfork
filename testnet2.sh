@@ -106,7 +106,7 @@ fi
 
 # The prysm bootstrap node is set after the first loop, as the first
 # node is the bootstrap node. This is used for consensus client discovery
-PRYSM_BOOTSTRAP_NODE=enr:-MK4QExjxS5v2BgtJJotRrYxVXUL7PMnneJnGZlxgsy6F1IrYsi5pUiGZ9KrqR0SuSrB9Ey0OYHGhDXgar0e_AQWYYGGAY3VWDmdh2F0dG5ldHOIAAAAAAAAgAGEZXRoMpBa8xKTIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQL8z8FrvMSApS7QjlM2ijsXcLnB-BgFQJ4kKr0nKEuOhohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA
+PRYSM_BOOTSTRAP_NODE=enr:-MK4QE-m0CuKvujKiB3dmgOUqwGB5w16XzASg1WcsRIKsqetdOAovSh8pYDLgmkw3ITe_dpNSVaLhMYUJx7vR96y0nyGAY3VZUv7h2F0dG5ldHOIAAAAAAAAAAyEZXRoMpCQwACqIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQP903FbN-tSE9tKqbOcRmr7fonSgVrEQ_jhS9LmfqU1KohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA
 # Calculate how many nodes to wait for to be in sync with. Not a hard rule
 MIN_SYNC_PEERS=1
 echo $MIN_SYNC_PEERS is minimum number of synced peers required
@@ -173,7 +173,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --datadir=$NODE_DIR/consensus/beacondata \
       --min-sync-peers=1 \
       --genesis-beacon-api-url=http://4.240.105.79:4100 \
-      --bootstrap-node=enr:-MK4QExjxS5v2BgtJJotRrYxVXUL7PMnneJnGZlxgsy6F1IrYsi5pUiGZ9KrqR0SuSrB9Ey0OYHGhDXgar0e_AQWYYGGAY3VWDmdh2F0dG5ldHOIAAAAAAAAgAGEZXRoMpBa8xKTIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQL8z8FrvMSApS7QjlM2ijsXcLnB-BgFQJ4kKr0nKEuOhohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
+      --bootstrap-node=enr:-MK4QE-m0CuKvujKiB3dmgOUqwGB5w16XzASg1WcsRIKsqetdOAovSh8pYDLgmkw3ITe_dpNSVaLhMYUJx7vR96y0nyGAY3VZUv7h2F0dG5ldHOIAAAAAAAAAAyEZXRoMpCQwACqIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQP903FbN-tSE9tKqbOcRmr7fonSgVrEQ_jhS9LmfqU1KohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
       --interop-eth1data-votes \
       --chain-config-file=$NODE_DIR/consensus/config.yml \
       --contract-deployment-block=0 \
