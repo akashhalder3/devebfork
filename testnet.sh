@@ -96,7 +96,7 @@ fi
 # on https://github.com/ethereum/eth2.0-pm/blob/a085c9870f3956d6228ed2a40cd37f0c6580ecd7/interop/mocked_start/README.md
 $PRYSM_CTL_BINARY testnet generate-genesis \
 --fork=deneb \
---num-validators=$NUM_NODES \
+--num-validators=64 \
 --chain-config-file=./config.yml \
 --geth-genesis-json-in=./genesis.json \
 --output-ssz=$NETWORK_DIR/genesis.ssz \
@@ -108,8 +108,8 @@ $PRYSM_CTL_BINARY testnet generate-genesis \
 PRYSM_BOOTSTRAP_NODE=
 
 # Calculate how many nodes to wait for to be in sync with. Not a hard rule
-MIN_SYNC_PEERS=$((NUM_NODES/2))
-echo $MIN_SYNC_PEERS is minimum number of synced peers required
+# MIN_SYNC_PEERS=$((NUM_NODES/2))
+# echo $MIN_SYNC_PEERS is minimum number of synced peers required
 
 # Create the validators in a loop
 for (( i=0; i<$NUM_NODES; i++ )); do
@@ -159,7 +159,6 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --password=$geth_pw_file \
       --bootnodes=$bootnode_enode \
       --identity=node-$i \
-      --maxpendpeers=$NUM_NODES \
       --verbosity=3 \
       --syncmode=full \
       --nodiscover \
