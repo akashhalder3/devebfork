@@ -127,9 +127,9 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     cp ./config.yml $NODE_DIR/consensus/config.yml
     # cp ./genesis.ssz $NODE_DIR/consensus/genesis.ssz
     cp ./genesis.json $NODE_DIR/execution/
-    cp -r ./keystore $NODE_DIR/execution
+    # cp -r ./keystore $NODE_DIR/execution
     # Create the secret keys for this node and other account details
-    # $GETH_BINARY account new --datadir "$NODE_DIR/execution" --password "$geth_pw_file"
+    $GETH_BINARY account new --datadir "$NODE_DIR/execution" --password "$geth_pw_file"
 
     # Initialize geth for this node. Geth uses the genesis.json to write some initial state
     $GETH_BINARY init \
