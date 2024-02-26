@@ -164,7 +164,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --nodiscover \
       --cache=1028 \
       --rpc.allow-unprotected-txs \
-      --nat extip:4.240.105.79 > "$NODE_DIR/logs/geth.log" 2>&1 &
+      --nat extip:20.244.97.158 > "$NODE_DIR/logs/geth.log" 2>&1 &
 
     sleep 5
 
@@ -187,7 +187,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --jwt-secret=$NODE_DIR/execution/jwtsecret \
       --suggested-fee-recipient=0x123463a4b065722e99115d6c222f267d9cabb524 \
       --minimum-peers-per-subnet=0 \
-      --p2p-host-ip=4.240.105.79 \
+      --p2p-host-ip=20.244.97.158 \
       --p2p-tcp-port=$((PRYSM_BEACON_P2P_TCP_PORT + i)) \
       --p2p-udp-port=$((PRYSM_BEACON_P2P_UDP_PORT + i)) \
       --monitoring-port=$((PRYSM_BEACON_MONITORING_PORT + i)) \
