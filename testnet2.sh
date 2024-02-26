@@ -172,7 +172,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     $PRYSM_BEACON_BINARY \
       --datadir=$NODE_DIR/consensus/beacondata \
       --min-sync-peers=1 \
-      --genesis-beacon-api-url=http://20.40.53.142:4100 \
+      --genesis-beacon-api-url=http://20.244.97.158:4100 \
       --bootstrap-node=enr:-MK4QEm8w5vy4skowvwHW3GuRFYgYunS95GjQ1yns91WHLGAQfV3tU9KXY6DQNmpLTMH8rZOlhUUOkhd7NxHbVHiBIeGAY3kgDiAh2F0dG5ldHOIBgAAAAAAAACEZXRoMpDDFlQAIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQJtnxYT11AsIdxL27ZddmIW0MfQf14bk2fJdI6vWejn1ohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
       --interop-eth1data-votes \
       --chain-config-file=$NODE_DIR/consensus/config.yml \
