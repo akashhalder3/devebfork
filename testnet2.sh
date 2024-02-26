@@ -106,7 +106,7 @@ fi
 
 # The prysm bootstrap node is set after the first loop, as the first
 # node is the bootstrap node. This is used for consensus client discovery
-PRYSM_BOOTSTRAP_NODE=enr:-MK4QE-m0CuKvujKiB3dmgOUqwGB5w16XzASg1WcsRIKsqetdOAovSh8pYDLgmkw3ITe_dpNSVaLhMYUJx7vR96y0nyGAY3VZUv7h2F0dG5ldHOIAAAAAAAAAAyEZXRoMpCQwACqIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQP903FbN-tSE9tKqbOcRmr7fonSgVrEQ_jhS9LmfqU1KohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA
+PRYSM_BOOTSTRAP_NODE=enr:-MK4QEm8w5vy4skowvwHW3GuRFYgYunS95GjQ1yns91WHLGAQfV3tU9KXY6DQNmpLTMH8rZOlhUUOkhd7NxHbVHiBIeGAY3kgDiAh2F0dG5ldHOIBgAAAAAAAACEZXRoMpDDFlQAIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQJtnxYT11AsIdxL27ZddmIW0MfQf14bk2fJdI6vWejn1ohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA
 # Calculate how many nodes to wait for to be in sync with. Not a hard rule
 MIN_SYNC_PEERS=1
 echo $MIN_SYNC_PEERS is minimum number of synced peers required
@@ -173,7 +173,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --datadir=$NODE_DIR/consensus/beacondata \
       --min-sync-peers=1 \
       --genesis-beacon-api-url=http://4.240.105.79:4100 \
-      --bootstrap-node=enr:-MK4QE-m0CuKvujKiB3dmgOUqwGB5w16XzASg1WcsRIKsqetdOAovSh8pYDLgmkw3ITe_dpNSVaLhMYUJx7vR96y0nyGAY3VZUv7h2F0dG5ldHOIAAAAAAAAAAyEZXRoMpCQwACqIAAAk___________gmlkgnY0gmlwhATwaU-Jc2VjcDI1NmsxoQP903FbN-tSE9tKqbOcRmr7fonSgVrEQ_jhS9LmfqU1KohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
+      --bootstrap-node=enr:-MK4QEm8w5vy4skowvwHW3GuRFYgYunS95GjQ1yns91WHLGAQfV3tU9KXY6DQNmpLTMH8rZOlhUUOkhd7NxHbVHiBIeGAY3kgDiAh2F0dG5ldHOIBgAAAAAAAACEZXRoMpDDFlQAIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQJtnxYT11AsIdxL27ZddmIW0MfQf14bk2fJdI6vWejn1ohzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
       --interop-eth1data-votes \
       --chain-config-file=$NODE_DIR/consensus/config.yml \
       --contract-deployment-block=0 \
@@ -204,7 +204,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
         sleep 5 # sleep to let the prysm node set up
         # If PRYSM_BOOTSTRAP_NODE is not set, execute the command and capture the result into the variable
         # This allows subsequent nodes to discover the first node, treating it as the bootnode
-        PRYSM_BOOTSTRAP_NODE=$(curl -s http://4.240.105.79:4100/eth/v1/node/identity | jq -r '.data.enr')
+        PRYSM_BOOTSTRAP_NODE=$(curl -s http://20.244.97.158:4100/eth/v1/node/identity | jq -r '.data.enr')
             # Check if the result starts with enr
         if [[ $PRYSM_BOOTSTRAP_NODE == enr* ]]; then
             echo "PRYSM_BOOTSTRAP_NODE is valid: $PRYSM_BOOTSTRAP_NODE"
