@@ -201,7 +201,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --beacon-rpc-provider=localhost:$((PRYSM_BEACON_RPC_PORT + i)) \
       --datadir=$NODE_DIR/consensus/validatordata \
       --accept-terms-of-use \
-      --interop-num-validators=64 \
+      --interop-num-validators=1 \
       --interop-start-index=0 \
       --rpc-port=$((PRYSM_VALIDATOR_RPC_PORT + i)) \
       --grpc-gateway-port=$((PRYSM_VALIDATOR_GRPC_GATEWAY_PORT + i)) \
