@@ -204,7 +204,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
 
     # Start prysm validator for this node. Each validator node will
     # manage 1 validator
-    # ./dependencies/prysm/out/validator --beacon-rpc-provider=localhost:4000 --datadir=./network/node-0/consensus/validatordata --accept-terms-of-use --interop-num-validators=2 --interop-start-index=0 --rpc-port=7000 --grpc-gateway-port=7100 --monitoring-port=7200 --chain-config-file=./network/node-0/consensus/config.yml > "$NODE_DIR/logs/validator.log" 2>&1 &
+    # ./dependencies/prysm/out/validator --beacon-rpc-provider=localhost:4000 --datadir=./network/node-0/consensus/validatordata --accept-terms-of-use --rpc-port=7000 --grpc-gateway-port=7100 --monitoring-port=7200 --chain-config-file=./network/node-0/consensus/config.yml > "$NODE_DIR/logs/validator.log" 2>&1 &
 
     # Check if the PRYSM_BOOTSTRAP_NODE variable is already set
     if [[ -z "${PRYSM_BOOTSTRAP_NODE}" ]]; then
