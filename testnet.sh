@@ -129,7 +129,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     cp $NETWORK_DIR/genesis.json $NODE_DIR/execution/genesis.json
 
     # Create the secret keys for this node and other account details
-    $GETH_BINARY account new --datadir "$NODE_DIR/execution" --password "$geth_pw_file"
+    # $GETH_BINARY account new --datadir "$NODE_DIR/execution" --password "$geth_pw_file"
     output=$($GETH_BINARY account new --datadir $NODE_DIR/execution --password $geth_pw_file)
     account_geth_address=$(echo "$output" | awk '/Public address of the key/ {print $NF}')
     sleep 5
@@ -152,6 +152,8 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --ws.api=eth,net,web3,debug,txpool \
       --ws.addr=0.0.0.0 \
       --ws.origins="*" \
+      --allow-insecure-unlock \
+      --unlock=$account_geth_address \
       --ws.port=$((GETH_WS_PORT + i)) \
       --authrpc.vhosts="*" \
       --authrpc.addr=0.0.0.0 \

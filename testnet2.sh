@@ -129,8 +129,11 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     cp ./genesis.json $NODE_DIR/execution/
     # cp -r ./keystore $NODE_DIR/execution
     # Create the secret keys for this node and other account details
-    $GETH_BINARY account new --datadir "$NODE_DIR/execution" --password "$geth_pw_file"
-
+    # $GETH_BINARY account new --datadir "$NODE_DIR/execution" --password "$geth_pw_file"
+    output=$($GETH_BINARY account new --datadir $NODE_DIR/execution --password $geth_pw_file)
+    account_geth_address=$(echo "$output" | awk '/Public address of the key/ {print $NF}')
+    sleep 5
+    
     # Initialize geth for this node. Geth uses the genesis.json to write some initial state
     $GETH_BINARY init \
       --datadir=$NODE_DIR/execution \
@@ -147,6 +150,10 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --port=$((GETH_NETWORK_PORT + i)) \
       --metrics.port=$((GETH_METRICS_PORT + i)) \
       --ws \
+      --authrpc.vhosts="*" \
+      --ws.origins="*" \
+      --allow-insecure-unlock \
+      --unlock=$account_geth_address \
       --ws.api=eth,net,web3,debug,txpool \
       --ws.addr=0.0.0.0 \
       --ws.origins="*" \
