@@ -129,7 +129,8 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     cp $NETWORK_DIR/genesis.json $NODE_DIR/execution/genesis.json
 
     # Create the secret keys for this node and other account details
-    $GETH_BINARY account new --datadir "$NODE_DIR/execution" --password "$geth_pw_file"
+    output = $GETH_BINARY account new --datadir "$NODE_DIR/execution" --password "$geth_pw_file"
+    account_geth_address=$(echo "$output" | awk '/Public address of the key/ {print $NF}')
 
     # Initialize geth for this node. Geth uses the genesis.json to write some initial state
     $GETH_BINARY init \
