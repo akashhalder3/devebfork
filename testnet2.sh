@@ -106,7 +106,7 @@ fi
 
 # The prysm bootstrap node is set after the first loop, as the first
 # node is the bootstrap node. This is used for consensus client discovery
-PRYSM_BOOTSTRAP_NODE=enr:-MK4QA-bENIaLhY1uEIng4uHVKDR-ohWruBMi3AsMY6aDqgyM5NUxjk-vDT-eWdOcScu1FFjo6Ay6IfkFY4vMzpozlqGAY3pVreTh2F0dG5ldHOIAAAAAAAAGACEZXRoMpDDFlQAIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQMcUzyrR5GQsT7eGOmLJOxX4ycz5gUVvnG_lKmwI2xzXYhzeW5jbmV0cw-DdGNwghBog3VkcIIQzA
+PRYSM_BOOTSTRAP_NODE=enr:-MK4QL3bwoqgh3y4YG_I6Y_Zdt4F7A-glfm9SuSdrnBTJzf9TMVywbx5DOxCE8EEAQjXH0LVyFbp77ruujmOM2O4rwiGAY3vQ-jqh2F0dG5ldHOIAAAAAAAAADCEZXRoMpDDFlQAIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQKO8wxuYtCySI--2jipP6L2xVPf8vZrLUOuhAjGHiApYYhzeW5jbmV0cw-DdGNwghBog3VkcIIQzA
 # Calculate how many nodes to wait for to be in sync with. Not a hard rule
 MIN_SYNC_PEERS=1
 echo $MIN_SYNC_PEERS is minimum number of synced peers required
@@ -133,7 +133,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     output=$($GETH_BINARY account new --datadir $NODE_DIR/execution --password $geth_pw_file)
     account_geth_address=$(echo "$output" | awk '/Public address of the key/ {print $NF}')
     sleep 5
-    
+
     # Initialize geth for this node. Geth uses the genesis.json to write some initial state
     $GETH_BINARY init \
       --datadir=$NODE_DIR/execution \
@@ -180,7 +180,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --datadir=$NODE_DIR/consensus/beacondata \
       --min-sync-peers=1 \
       --genesis-beacon-api-url=http://20.244.97.158:4100 \
-      --bootstrap-node=enr:-MK4QA-bENIaLhY1uEIng4uHVKDR-ohWruBMi3AsMY6aDqgyM5NUxjk-vDT-eWdOcScu1FFjo6Ay6IfkFY4vMzpozlqGAY3pVreTh2F0dG5ldHOIAAAAAAAAGACEZXRoMpDDFlQAIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQMcUzyrR5GQsT7eGOmLJOxX4ycz5gUVvnG_lKmwI2xzXYhzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
+      --bootstrap-node=enr:-MK4QL3bwoqgh3y4YG_I6Y_Zdt4F7A-glfm9SuSdrnBTJzf9TMVywbx5DOxCE8EEAQjXH0LVyFbp77ruujmOM2O4rwiGAY3vQ-jqh2F0dG5ldHOIAAAAAAAAADCEZXRoMpDDFlQAIAAAk___________gmlkgnY0gmlwhBT0YZ6Jc2VjcDI1NmsxoQKO8wxuYtCySI--2jipP6L2xVPf8vZrLUOuhAjGHiApYYhzeW5jbmV0cw-DdGNwghBog3VkcIIQzA \
       --interop-eth1data-votes \
       --chain-config-file=$NODE_DIR/consensus/config.yml \
       --contract-deployment-block=0 \
