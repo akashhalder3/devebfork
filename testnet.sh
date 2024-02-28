@@ -136,6 +136,8 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     $GETH_BINARY init \
       --datadir=$NODE_DIR/execution \
       $NODE_DIR/execution/genesis.json
+    
+    sleep 5
 
     # Start geth execution client for this node
     $GETH_BINARY \
