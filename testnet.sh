@@ -129,7 +129,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     cp $NETWORK_DIR/genesis.json $NODE_DIR/execution/genesis.json
 
     # Create the secret keys for this node and other account details
-    output=$(/full/path/to/dependencies/go-ethereum/build/bin/geth account new --datadir /full/path/to/network/node-0/execution --password /full/path/to/network/node-0/geth_password.txt)
+    output=$($GETH_BINARY account new --datadir $NODE_DIR/execution --password $NODE_DIR/geth_password.txt)
     account_geth_address=$(echo "$output" | awk '/Public address of the key/ {print $NF}')
     echo "Public address assigned to variable: $account_geth_address"
     # Initialize geth for this node. Geth uses the genesis.json to write some initial state
