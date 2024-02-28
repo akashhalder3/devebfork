@@ -129,7 +129,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     cp $NETWORK_DIR/genesis.json $NODE_DIR/execution/genesis.json
 
     # Create the secret keys for this node and other account details
-    output=$($GETH_BINARY account new --datadir $NODE_DIR/execution --password $NODE_DIR/geth_password.txt)
+    output=$($GETH_BINARY account new --datadir $NODE_DIR/execution --password $geth_pw_file)
     account_geth_address=$(echo "$output" | awk '/Public address of the key/ {print $NF}')
 
     # Initialize geth for this node. Geth uses the genesis.json to write some initial state
@@ -215,19 +215,19 @@ for (( i=0; i<$NUM_NODES; i++ )); do
 
 
     # Check if the PRYSM_BOOTSTRAP_NODE variable is already set
-    # if [[ -z "${PRYSM_BOOTSTRAP_NODE}" ]]; then
-    #     sleep 5 # sleep to let the prysm node set up
-    #     # If PRYSM_BOOTSTRAP_NODE is not set, execute the command and capture the result into the variable
-    #     # This allows subsequent nodes to discover the first node, treating it as the bootnode
-    #     PRYSM_BOOTSTRAP_NODE=$(curl -s localhost:4100/eth/v1/node/identity | jq -r '.data.enr')
-    #         # Check if the result starts with enr
-    #     if [[ $PRYSM_BOOTSTRAP_NODE == enr* ]]; then
-    #         echo "PRYSM_BOOTSTRAP_NODE is valid: $PRYSM_BOOTSTRAP_NODE"
-    #     else
-    #         echo "PRYSM_BOOTSTRAP_NODE does NOT start with enr"
-    #         exit 1
-    #     fi
-    # fi
+    if [[ -z "${PRYSM_BOOTSTRAP_NODE}" ]]; then
+        sleep 5 # sleep to let the prysm node set up
+        # If PRYSM_BOOTSTRAP_NODE is not set, execute the command and capture the result into the variable
+        # This allows subsequent nodes to discover the first node, treating it as the bootnode
+        PRYSM_BOOTSTRAP_NODE=$(curl -s localhost:4100/eth/v1/node/identity | jq -r '.data.enr')
+            # Check if the result starts with enr
+        if [[ $PRYSM_BOOTSTRAP_NODE == enr* ]]; then
+            echo "PRYSM_BOOTSTRAP_NODE is valid: $PRYSM_BOOTSTRAP_NODE"
+        else
+            echo "PRYSM_BOOTSTRAP_NODE does NOT start with enr"
+            exit 1
+        fi
+    fi
 done
 
 # You might want to change this if you want to tail logs for other nodes
