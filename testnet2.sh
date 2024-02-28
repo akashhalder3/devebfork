@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bas
 
 set -exu
 set -o pipefail
