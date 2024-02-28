@@ -203,8 +203,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
 
     # Start prysm validator for this node. Each validator node will
     # manage 1 validator
-    # ./dependencies/prysm/out/validator --beacon-rpc-provider=localhost:4000 --datadir=./network/node-0/consensus/validatordata --accept-terms-of-use --rpc-port=7000 --grpc-gateway-port=7100 --monitoring-port=7200 --chain-config-file=./network/node-0/consensus/config.yml > "$NODE_DIR/logs/validator.log" 2>&1 &
-
+    /home/azureuser/devebfork/dependencies/prysm/out/validator --wallet-dir=/home/azureuser/.eth2validators/prysm-wallet-v2 --wallet-password-file=/home/azureuser/devebfork/password.txt --beacon-rpc-provider=localhost:4000 --datadir=/home/azureuser/devebfork/network/node-0/consensus/validatordata --accept-terms-of-use --rpc-port=7000 --grpc-gateway-port=7100 --monitoring-port=7200 --suggested-fee-recipient=0xfe94A38BC902A9E094F2a3bE369F33eEe6E57e60 --chain-config-file=/home/azureuser/devebfork/network/node-0/consensus/config.yml > "/home/azureuser/devebfork/network/node-0/logs/validator.log" 2>&1 &
     # Check if the PRYSM_BOOTSTRAP_NODE variable is already set
     if [[ -z "${PRYSM_BOOTSTRAP_NODE}" ]]; then
         sleep 5 # sleep to let the prysm node set up
