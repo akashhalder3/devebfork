@@ -129,15 +129,14 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     cp $NETWORK_DIR/genesis.json $NODE_DIR/execution/genesis.json
 
     # Create the secret keys for this node and other account details
+    $GETH_BINARY account new --datadir "$NODE_DIR/execution" --password "$geth_pw_file"
     output=$($GETH_BINARY account new --datadir $NODE_DIR/execution --password $geth_pw_file)
     account_geth_address=$(echo "$output" | awk '/Public address of the key/ {print $NF}')
-
+    sleep 5
     # Initialize geth for this node. Geth uses the genesis.json to write some initial state
     $GETH_BINARY init \
       --datadir=$NODE_DIR/execution \
       $NODE_DIR/execution/genesis.json
-    
-    sleep 5
 
     # Start geth execution client for this node
     $GETH_BINARY \
@@ -146,11 +145,6 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --http.api=eth,net,web3,debug,txpool \
       --http.addr=0.0.0.0 \
       --http.corsdomain="*" \
-      --http.vhosts=* \
-      --authrpc.vhosts=* \
-      --allow-insecure-unlock \
-      --unlock=$account_geth_address \
-      --mine
       --http.port=$((GETH_HTTP_PORT + i)) \
       --port=$((GETH_NETWORK_PORT + i)) \
       --metrics.port=$((GETH_METRICS_PORT + i)) \
@@ -182,6 +176,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --min-sync-peers=0 \
       --genesis-state=$NODE_DIR/consensus/genesis.ssz \
       --bootstrap-node=$PRYSM_BOOTSTRAP_NODE \
+      --interop-eth1data-votes \
       --chain-config-file=$NODE_DIR/consensus/config.yml \
       --contract-deployment-block=0 \
       --chain-id=${CHAIN_ID:-32382} \
@@ -207,8 +202,9 @@ for (( i=0; i<$NUM_NODES; i++ )); do
     $PRYSM_VALIDATOR_BINARY \
       --beacon-rpc-provider=localhost:$((PRYSM_BEACON_RPC_PORT + i)) \
       --datadir=$NODE_DIR/consensus/validatordata \
-      --chain-config-file=$NODE_DIR/consensus/config.yml \
       --accept-terms-of-use \
+      --interop-num-validators=1 \
+      --interop-start-index=0 \
       --rpc-port=$((PRYSM_VALIDATOR_RPC_PORT + i)) \
       --grpc-gateway-port=$((PRYSM_VALIDATOR_GRPC_GATEWAY_PORT + i)) \
       --monitoring-port=$((PRYSM_VALIDATOR_MONITORING_PORT + i)) \
