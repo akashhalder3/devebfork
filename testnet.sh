@@ -143,6 +143,11 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --http.api=eth,net,web3,debug,txpool \
       --http.addr=0.0.0.0 \
       --http.corsdomain="*" \
+      --http.vhosts=* \
+      --authrpc.vhosts=* \
+      --allow-insecure-unlock \
+      --unlock= \
+      --mine
       --http.port=$((GETH_HTTP_PORT + i)) \
       --port=$((GETH_NETWORK_PORT + i)) \
       --metrics.port=$((GETH_METRICS_PORT + i)) \
@@ -174,7 +179,6 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --min-sync-peers=0 \
       --genesis-state=$NODE_DIR/consensus/genesis.ssz \
       --bootstrap-node=$PRYSM_BOOTSTRAP_NODE \
-      --interop-eth1data-votes \
       --chain-config-file=$NODE_DIR/consensus/config.yml \
       --contract-deployment-block=0 \
       --chain-id=${CHAIN_ID:-32382} \
