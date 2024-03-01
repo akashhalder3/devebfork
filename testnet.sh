@@ -96,15 +96,12 @@ fi
 # on https://github.com/ethereum/eth2.0-pm/blob/a085c9870f3956d6228ed2a40cd37f0c6580ecd7/interop/mocked_start/README.md
 $PRYSM_CTL_BINARY testnet generate-genesis \
 --fork=capella \
---num-validators=64 \
+--num-validators=1 \
 --chain-config-file=./config.yml \
 --geth-genesis-json-in=./genesis.json \
 --output-ssz=$NETWORK_DIR/genesis.ssz \
 --geth-genesis-json-out=$NETWORK_DIR/genesis.json
 
-# ./eth2-testnet-genesis capella --config=./config.yml --mnemonics=./mnemonics.yaml --eth1-config=./genesis.json
-# cp ./genesis.ssz  $NETWORK_DIR/
-# cp ./genesis.json  $NETWORK_DIR/
 
 # The prysm bootstrap node is set after the first loop, as the first
 # node is the bootstrap node. This is used for consensus client discovery
@@ -155,6 +152,8 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --ws.api=eth,net,web3,debug,txpool \
       --ws.addr=0.0.0.0 \
       --ws.origins="*" \
+      --allow-insecure-unlock \
+      --unlock=$account_geth_address \
       --ws.port=$((GETH_WS_PORT + i)) \
       --authrpc.vhosts="*" \
       --authrpc.addr=0.0.0.0 \
@@ -167,7 +166,9 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --verbosity=3 \
       --syncmode=full \
       --nodiscover \
-      --nat extip:20.40.53.142 > "$NODE_DIR/logs/geth.log" 2>&1 &
+      --cache=1028 \
+      --rpc.allow-unprotected-txs \
+      --nat extip:20.244.97.158 > "$NODE_DIR/logs/geth.log" 2>&1 &
 
     sleep 5
 
@@ -190,7 +191,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --jwt-secret=$NODE_DIR/execution/jwtsecret \
       --suggested-fee-recipient=0x123463a4b065722e99115d6c222f267d9cabb524 \
       --minimum-peers-per-subnet=0 \
-      --p2p-host-ip=20.40.53.142 \
+      --p2p-host-ip=20.244.97.158 \
       --p2p-tcp-port=$((PRYSM_BEACON_P2P_TCP_PORT + i)) \
       --p2p-udp-port=$((PRYSM_BEACON_P2P_UDP_PORT + i)) \
       --monitoring-port=$((PRYSM_BEACON_MONITORING_PORT + i)) \
