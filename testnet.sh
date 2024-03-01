@@ -98,7 +98,6 @@ $PRYSM_CTL_BINARY testnet generate-genesis \
 --fork=capella \
 --num-validators=64 \
 --chain-config-file=./config.yml \
---genesis-time-delay=600 \
 --geth-genesis-json-in=./genesis.json \
 --output-ssz=$NETWORK_DIR/genesis.ssz \
 --geth-genesis-json-out=$NETWORK_DIR/genesis.json
