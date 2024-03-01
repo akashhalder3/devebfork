@@ -103,7 +103,8 @@ fi
 # --geth-genesis-json-out=$NETWORK_DIR/genesis.json
 
 /home/azureuser/eth2-testnet-genesis/eth2-testnet-genesis capella --config=./config.yml --mnemonics=./mnemonics.yaml --eth1-config=./genesis.json
-
+cp ./genesis.ssz $NETWORK_DIR
+cp ./genesis.json $NETWORK_DIR
 # The prysm bootstrap node is set after the first loop, as the first
 # node is the bootstrap node. This is used for consensus client discovery
 PRYSM_BOOTSTRAP_NODE=
