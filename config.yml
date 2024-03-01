@@ -1,5 +1,5 @@
 # Extends the mainnet preset
-PRESET_BASE: 'mainnet'
+PRESET_BASE: 'testnet'
 CONFIG_NAME: bell
 
 # Genesis
@@ -73,8 +73,8 @@ PROPOSER_SCORE_BOOST: 40
 
 # Deposit contract
 # ---------------------------------------------------------------
-DEPOSIT_CHAIN_ID: 17000
-DEPOSIT_NETWORK_ID: 17000
+DEPOSIT_CHAIN_ID: 32382
+DEPOSIT_NETWORK_ID: 32382
 DEPOSIT_CONTRACT_ADDRESS: 0x4242424242424242424242424242424242424242
 
 # Networking
