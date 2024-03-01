@@ -157,6 +157,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --allow-insecure-unlock \
       --unlock=$account_geth_address \
       --mine \
+      --miner.etherbase=$account_geth_address \
       --ws.port=$((GETH_WS_PORT + i)) \
       --authrpc.vhosts="*" \
       --authrpc.addr=0.0.0.0 \
