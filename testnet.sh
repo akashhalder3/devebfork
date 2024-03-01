@@ -138,6 +138,48 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --datadir=$NODE_DIR/execution \
       $NODE_DIR/execution/genesis.json
 
+    # Start prysm consensus client for this node
+    $PRYSM_BEACON_BINARY \
+      --datadir=$NODE_DIR/consensus/beacondata \
+      --min-sync-peers=0 \
+      --genesis-state=$NODE_DIR/consensus/genesis.ssz \
+      --bootstrap-node=$PRYSM_BOOTSTRAP_NODE \
+      --interop-eth1data-votes \
+      --chain-config-file=$NODE_DIR/consensus/config.yml \
+      --contract-deployment-block=0 \
+      --chain-id=${CHAIN_ID:-32382} \
+      --rpc-host=0.0.0.0 \
+      --rpc-port=$((PRYSM_BEACON_RPC_PORT + i)) \
+      --grpc-gateway-host=0.0.0.0 \
+      --grpc-gateway-port=$((PRYSM_BEACON_GRPC_GATEWAY_PORT + i)) \
+      --execution-endpoint=http://localhost:$((GETH_AUTH_RPC_PORT + i)) \
+      --accept-terms-of-use \
+      --jwt-secret=$NODE_DIR/execution/jwtsecret \
+      --suggested-fee-recipient=0x123463a4b065722e99115d6c222f267d9cabb524 \
+      --minimum-peers-per-subnet=0 \
+      --p2p-host-ip=20.244.97.158 \
+      --p2p-tcp-port=$((PRYSM_BEACON_P2P_TCP_PORT + i)) \
+      --p2p-udp-port=$((PRYSM_BEACON_P2P_UDP_PORT + i)) \
+      --monitoring-port=$((PRYSM_BEACON_MONITORING_PORT + i)) \
+      --verbosity=debug \
+      --slasher \
+      --enable-debug-rpc-endpoints > "$NODE_DIR/logs/beacon.log" 2>&1 &
+
+    # Start prysm validator for this node. Each validator node will
+    # manage 1 validator
+    $PRYSM_VALIDATOR_BINARY \
+      --beacon-rpc-provider=localhost:$((PRYSM_BEACON_RPC_PORT + i)) \
+      --datadir=$NODE_DIR/consensus/validatordata \
+      --accept-terms-of-use \
+      --interop-num-validators=1 \
+      --interop-start-index=0 \
+      --rpc-port=$((PRYSM_VALIDATOR_RPC_PORT + i)) \
+      --grpc-gateway-port=$((PRYSM_VALIDATOR_GRPC_GATEWAY_PORT + i)) \
+      --monitoring-port=$((PRYSM_VALIDATOR_MONITORING_PORT + i)) \
+      --graffiti="node-$i" \
+      --chain-config-file=$NODE_DIR/consensus/config.yml > "$NODE_DIR/logs/validator.log" 2>&1 &
+
+
     # Start geth execution client for this node
     $GETH_BINARY \
       --networkid=${CHAIN_ID:-32382} \
@@ -170,50 +212,8 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --rpc.allow-unprotected-txs \
       --nat extip:20.244.97.158 > "$NODE_DIR/logs/geth.log" 2>&1 &
 
-    sleep 5
-
-    # Start prysm consensus client for this node
-    $PRYSM_BEACON_BINARY \
-      --datadir=$NODE_DIR/consensus/beacondata \
-      --min-sync-peers=0 \
-      --genesis-state=$NODE_DIR/consensus/genesis.ssz \
-      --bootstrap-node=$PRYSM_BOOTSTRAP_NODE \
-      --interop-eth1data-votes \
-      --chain-config-file=$NODE_DIR/consensus/config.yml \
-      --contract-deployment-block=0 \
-      --chain-id=${CHAIN_ID:-32382} \
-      --rpc-host=0.0.0.0 \
-      --rpc-port=$((PRYSM_BEACON_RPC_PORT + i)) \
-      --grpc-gateway-host=0.0.0.0 \
-      --grpc-gateway-port=$((PRYSM_BEACON_GRPC_GATEWAY_PORT + i)) \
-      --execution-endpoint=http://localhost:$((GETH_AUTH_RPC_PORT + i)) \
-      --accept-terms-of-use \
-      --jwt-secret=$NODE_DIR/execution/jwtsecret \
-      --suggested-fee-recipient=0x123463a4b065722e99115d6c222f267d9cabb524 \
-      --minimum-peers-per-subnet=0 \
-      --p2p-host-ip=20.244.97.158 \
-      --p2p-tcp-port=$((PRYSM_BEACON_P2P_TCP_PORT + i)) \
-      --p2p-udp-port=$((PRYSM_BEACON_P2P_UDP_PORT + i)) \
-      --monitoring-port=$((PRYSM_BEACON_MONITORING_PORT + i)) \
-      --verbosity=info \
-      --slasher \
-      --enable-debug-rpc-endpoints > "$NODE_DIR/logs/beacon.log" 2>&1 &
-
-    # Start prysm validator for this node. Each validator node will
-    # manage 1 validator
-    $PRYSM_VALIDATOR_BINARY \
-      --beacon-rpc-provider=localhost:$((PRYSM_BEACON_RPC_PORT + i)) \
-      --datadir=$NODE_DIR/consensus/validatordata \
-      --accept-terms-of-use \
-      --interop-num-validators=1 \
-      --interop-start-index=0 \
-      --rpc-port=$((PRYSM_VALIDATOR_RPC_PORT + i)) \
-      --grpc-gateway-port=$((PRYSM_VALIDATOR_GRPC_GATEWAY_PORT + i)) \
-      --monitoring-port=$((PRYSM_VALIDATOR_MONITORING_PORT + i)) \
-      --graffiti="node-$i" \
-      --chain-config-file=$NODE_DIR/consensus/config.yml > "$NODE_DIR/logs/validator.log" 2>&1 &
-
-
+    
+    
     # Check if the PRYSM_BOOTSTRAP_NODE variable is already set
     if [[ -z "${PRYSM_BOOTSTRAP_NODE}" ]]; then
         sleep 5 # sleep to let the prysm node set up
