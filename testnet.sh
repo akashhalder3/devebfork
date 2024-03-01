@@ -155,8 +155,6 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --ws.api=eth,net,web3,debug,txpool \
       --ws.addr=0.0.0.0 \
       --ws.origins="*" \
-      --allow-insecure-unlock \
-      --unlock=$account_geth_address \
       --ws.port=$((GETH_WS_PORT + i)) \
       --authrpc.vhosts="*" \
       --authrpc.addr=0.0.0.0 \
@@ -169,8 +167,6 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --verbosity=3 \
       --syncmode=full \
       --nodiscover \
-      --cache=1028 \
-      --rpc.allow-unprotected-txs \
       --nat extip:20.40.53.142 > "$NODE_DIR/logs/geth.log" 2>&1 &
 
     sleep 5
