@@ -102,7 +102,7 @@ fi
 # --output-ssz=$NETWORK_DIR/genesis.ssz \
 # --geth-genesis-json-out=$NETWORK_DIR/genesis.json
 
-./eth2-testnet-genesis capella --config=./config.yaml --mnemonics=./mnemonics.yaml --eth1-config=./genesis.json
+./eth2-testnet-genesis capella --config=./config.yml --mnemonics=./mnemonics.yaml --eth1-config=./genesis.json
 cp ./genesis.ssz  $NETWORK_DIR/
 cp ./genesis.json  $NETWORK_DIR/
 
