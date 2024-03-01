@@ -156,6 +156,7 @@ for (( i=0; i<$NUM_NODES; i++ )); do
       --ws.origins="*" \
       --allow-insecure-unlock \
       --unlock=$account_geth_address \
+      --mine \
       --ws.port=$((GETH_WS_PORT + i)) \
       --authrpc.vhosts="*" \
       --authrpc.addr=0.0.0.0 \
