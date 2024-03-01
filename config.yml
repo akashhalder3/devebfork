@@ -25,7 +25,7 @@ TERMINAL_BLOCK_HASH_ACTIVATION_EPOCH: 18446744073709551615
 # [customized]
 MIN_GENESIS_ACTIVE_VALIDATOR_COUNT: 64
 # Jan 3, 2020
-# MIN_GENESIS_TIME: 1695902100
+MIN_GENESIS_TIME: 1709291995
 # Highest byte set to 0x01 to avoid collisions with mainnet versioning
 GENESIS_FORK_VERSION: 0x00000001
 # [customized] Faster to spin up testnets, but does not give validator reasonable warning time for genesis
