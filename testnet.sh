@@ -79,3 +79,10 @@ done
 while ! test -S $SIGNER_EL_DATADIR/geth.ipc; do
     sleep 1
 done
+
+if ! ./scripts/prepare-cl.sh; then
+    echo -e "\n*Failed!* in the consensus layer preparation step\n"
+    exit 1
+fi
+
+./scripts/cl-bootnode.sh &
