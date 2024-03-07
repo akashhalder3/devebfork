@@ -18,3 +18,9 @@ new_account() {
     alloc=$(echo $genesis | jq ".alloc + { \"${address:2}\": { \"balance\": \"$INITIAL_BALANCE\" } }")
     genesis=$(echo $genesis | jq ". + { \"alloc\": $alloc }")
 }
+
+genesis=$(cat $GENESIS_TEMPLATE_FILE)
+for (( node=1; node<=$NODE_COUNT; node++ )); do
+    el_data_dir $node
+    new_account "#$node" $el_data_dir
+done
