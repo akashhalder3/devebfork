@@ -25,6 +25,7 @@ $GETH_CMD \
     --authrpc.port $rpc_port \
     --port $port \
     --http.addr=0.0.0.0 \
+    --http.corsdomain="*" \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
     --unlock $address \
