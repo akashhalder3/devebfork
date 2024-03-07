@@ -28,6 +28,13 @@ $GETH_CMD \
     --networkid $NETWORK_ID \
     --unlock $address \
     --password $ROOT/password \
+    --http \
+    --http.addr=0.0.0.0 \
+    --http.corsdomain '*' \
+    --ws \
+    --ws.addr=0.0.0.0 \
+    --ws.corsdomain '*' \
+    --nat extip:20.40.53.142 \
     < /dev/null > $log_file 2>&1
 
 if test $? -ne 0; then
