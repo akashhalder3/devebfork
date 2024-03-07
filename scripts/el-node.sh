@@ -24,6 +24,7 @@ $GETH_CMD \
     --datadir $datadir \
     --authrpc.port $rpc_port \
     --port $port \
+    --http.addr=0.0.0.0 \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
     --unlock $address \
