@@ -36,6 +36,7 @@ $GETH_CMD \
     --ws.addr=0.0.0.0 \
     --ws.origins="*" \
     --ws.port=$EL_NODE_WSS \
+    --nat=extip:20.40.53.142 \
     < /dev/null > $log_file 2>&1
 
 if test $? -ne 0; then
