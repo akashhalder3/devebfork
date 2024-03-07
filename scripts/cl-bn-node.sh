@@ -17,6 +17,13 @@ port=$(expr $BASE_CL_PORT + $index)
 http_port=$(expr $BASE_CL_HTTP_PORT + $index)
 log_file=$datadir/beacon_node.log
 
+# If index is 2, add 5 to the port
+if [[ $index -eq 2 ]]; then
+    port=$((BASE_CL_PORT + 5))
+else
+    port=$((BASE_CL_PORT + index))
+fi
+
 http_port=$((BASE_CL_HTTP_PORT + index))
 
 echo "Started the lighthouse beacon node #$index which is now listening at port $port and http at port $http_port. You can see the log at $log_file"
