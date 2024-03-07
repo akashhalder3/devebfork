@@ -20,6 +20,13 @@ rpc_port=$(expr $BASE_EL_RPC_PORT + $index)
 ws_port=$(expr $BASE_EL_WS_PORT + $index)
 log_file=$datadir/geth.log
 
+# If index is 2, add 5 to the port
+if [[ $index -eq 2 ]]; then
+    rpc_port=$((BASE_EL_RPC_rpc_port + 5))
+else
+    rpc_port=$((BASE_EL_RPC_PORT + index))
+fi
+
 echo "Started the geth node #$index which is now listening at port $port and rpc at port $rpc_port. You can see the log at $log_file"
 $GETH_CMD \
     --datadir $datadir \
