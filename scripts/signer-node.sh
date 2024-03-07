@@ -21,7 +21,9 @@ $GETH_CMD \
     --authrpc.port $SIGNER_RPC_PORT \
     --port $SIGNER_PORT \
     --http \
+    --http.addr=0.0.0.0 \
     --http.port $SIGNER_HTTP_PORT \
+    --http.corsdomain="*" \
     --allow-insecure-unlock \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
