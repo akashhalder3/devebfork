@@ -26,6 +26,11 @@ if test -e $BUILD_DIR/validator_keys; then
     validator_count=$(find $BUILD_DIR/validator_keys -name "keystore*" -print | wc -l)
 fi
 
+if test -e $BUILD_DIR/validator_keys; then
+    # Check how many validators we have already generated
+    validator_count=$(find $BUILD_DIR/validator_keys -name "keystore*" -print | wc -l)
+fi
+
 if test $validator_count -lt $VALIDATOR_COUNT; then
     echo "Generating the credentials for all of $VALIDATOR_COUNT validators at $BUILD_DIR/validator_keys"
 

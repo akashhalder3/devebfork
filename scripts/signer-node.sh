@@ -9,8 +9,8 @@ cleanup() {
 
 trap cleanup EXIT
 
-datadir=$0
-boot_enode=$1
+datadir=$1
+boot_enode=$2
 
 address=$(cat $datadir/address)
 log_file=$datadir/geth.log

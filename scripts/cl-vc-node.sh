@@ -9,7 +9,7 @@ cleanup() {
 
 trap cleanup EXIT
 
-index=$0
+index=$1
 
 cl_data_dir $index
 datadir=$cl_data_dir
