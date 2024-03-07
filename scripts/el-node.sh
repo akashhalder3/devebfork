@@ -22,7 +22,7 @@ log_file=$datadir/geth.log
 
 # If index is 2, add 5 to the port
 if [[ $index -eq 2 ]]; then
-    rpc_port=$((BASE_EL_RPC_rpc_port + 5))
+    rpc_port=$((BASE_EL_RPC_PORT + 5))
 else
     rpc_port=$((BASE_EL_RPC_PORT + index))
 fi
