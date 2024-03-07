@@ -28,11 +28,11 @@ check_cmd node "See https://nodejs.org/en/download/ for more detail."
 
 cleanup() {
     echo "Shutting down"
-    pids=$(jobs -p)
-    while ps p $pids >/dev/null 2>/dev/null; do
-        kill $pids 2>/dev/null
-        sleep 1
-    done
+    # pids=$(jobs -p)
+    # while ps p $pids >/dev/null 2>/dev/null; do
+    #     kill $pids 2>/dev/null
+    #     sleep 1
+    # done
     while test -e $ROOT; do
         rm -rf $ROOT 2>/dev/null
         sleep 1
