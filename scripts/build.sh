@@ -19,3 +19,9 @@ if ! test -e $BUILD_DIR/deposit; then
 
     echo "$BUILD_DIR/deposit downloaded"
 fi
+
+validator_count=0
+if test -e $BUILD_DIR/validator_keys; then
+    # Check how many validators we have already generated
+    validator_count=$(find $BUILD_DIR/validator_keys -name "keystore*" -print | wc -l)
+fi
