@@ -57,3 +57,7 @@ done
 
 $GETH_CMD init --datadir $SIGNER_EL_DATADIR $GENESIS_FILE 2>/dev/null
 echo "Initialized the data directory $SIGNER_EL_DATADIR with $GENESIS_FILE"
+
+# Generate the boot node key
+bootnode -genkey $EL_BOOT_KEY_FILE
+echo "Generated $EL_BOOT_KEY_FILE"

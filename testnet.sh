@@ -54,3 +54,6 @@ if ! ./scripts/prepare-el.sh; then
     echo -e "\n*Failed!* in the execution layer preparation step\n"
     exit 1
 fi
+
+./scripts/el-bootnode.sh &
+bootnode_pid=$!
