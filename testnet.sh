@@ -43,3 +43,9 @@ cleanup() {
 trap cleanup EXIT
 
 mkdir -p $ROOT
+
+# Run everything needed to generate $BUILD_DIR
+if ! ./scripts/build.sh; then
+    echo -e "\n*Failed!* in the build step\n"
+    exit 1
+fi
