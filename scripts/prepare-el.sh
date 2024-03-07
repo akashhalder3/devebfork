@@ -24,3 +24,16 @@ for (( node=1; node<=$NODE_COUNT; node++ )); do
     el_data_dir $node
     new_account "#$node" $el_data_dir
 done
+
+new_account "'signer'" $SIGNER_EL_DATADIR
+
+# Add the extradata
+zeroes() {
+    for i in $(seq $1); do
+        echo -n "0"
+    done
+}
+
+address=$(cat $SIGNER_EL_DATADIR/address)
+extra_data="0x$(zeroes 64)${address:2}$(zeroes 130)"
+genesis=$(echo $genesis | jq ". + { \"extradata\": \"$extra_data\" }")
