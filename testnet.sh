@@ -86,3 +86,10 @@ if ! ./scripts/prepare-cl.sh; then
 fi
 
 ./scripts/cl-bootnode.sh &
+
+for (( node=1; node<=$NODE_COUNT; node++ )); do
+    ./scripts/cl-bn-node.sh $node &
+    ./scripts/cl-vc-node.sh $node &
+done
+
+wait -n
