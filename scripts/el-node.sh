@@ -17,6 +17,7 @@ datadir=$el_data_dir
 address=$(cat $datadir/address)
 port=$(expr $BASE_EL_PORT + $index)
 rpc_port=$(expr $BASE_EL_RPC_PORT + $index)
+ws_port=$(expr $BASE_EL_WS_PORT + $index)
 log_file=$datadir/geth.log
 
 echo "Started the geth node #$index which is now listening at port $port and rpc at port $rpc_port. You can see the log at $log_file"
@@ -31,9 +32,11 @@ $GETH_CMD \
     --password $ROOT/password \
     --http \
     --http.addr=0.0.0.0 \
+    --http.port=$rpc_port
     --http.corsdomain="*" \
     --ws \
     --ws.addr=0.0.0.0 \
+    --ws.port=
     --ws.origins="*" \
     --nat extip:20.40.53.142 \
     < /dev/null > $log_file 2>&1
