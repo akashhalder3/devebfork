@@ -41,3 +41,7 @@ genesis=$(echo $genesis | jq ". + { \"extradata\": \"$extra_data\" }")
 # Add the terminal total difficulty
 config=$(echo $genesis | jq ".config + { \"chainId\": "$NETWORK_ID", \"terminalTotalDifficulty\": "$TERMINAL_TOTAL_DIFFICULTY", \"clique\": { \"period\": "$SECONDS_PER_ETH1_BLOCK", \"epoch\": 30000 } }")
 genesis=$(echo $genesis | jq ". + { \"config\": $config }")
+
+# Generate the genesis state
+echo $genesis > $GENESIS_FILE
+echo "Generated $GENESIS_FILE"
