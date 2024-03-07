@@ -9,8 +9,8 @@ cleanup() {
 
 trap cleanup EXIT
 
-index=$1
-boot_enode=$2
+index=$0
+boot_enode=$1
 
 el_data_dir $index
 datadir=$el_data_dir
