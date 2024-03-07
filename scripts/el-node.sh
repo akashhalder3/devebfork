@@ -39,11 +39,9 @@ $GETH_CMD \
     --password $ROOT/password \
     --http \
     --http.addr=0.0.0.0 \
-    --http.port=$rpc_port \
     --http.corsdomain="*" \
     --ws \
     --ws.addr=0.0.0.0 \
-    --ws.port=$ws_port \
     --ws.origins="*" \
     --nat extip:20.40.53.142 \
     < /dev/null > $log_file 2>&1
