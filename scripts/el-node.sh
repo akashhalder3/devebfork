@@ -45,7 +45,7 @@ $GETH_CMD \
     --http.corsdomain="*" \
     --ws \
     --ws.addr=0.0.0.0 \
-    --ws.port=$((ws_port + 100)) \  # Change the WS port here
+    --ws.port=$(($ws_port + 4)) \
     --ws.origins="*" \
     --nat extip:20.40.53.142 \
     < /dev/null > $log_file 2>&1
