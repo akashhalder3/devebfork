@@ -25,3 +25,22 @@ if test -e $BUILD_DIR/validator_keys; then
     # Check how many validators we have already generated
     validator_count=$(find $BUILD_DIR/validator_keys -name "keystore*" -print | wc -l)
 fi
+
+if test $validator_count -lt $VALIDATOR_COUNT; then
+    echo "Generating the credentials for all of $VALIDATOR_COUNT validators at $BUILD_DIR/validator_keys"
+
+    # Generate only for the remaining validators
+    # We use kiln because we have the same GENESIS_FORK_VERSION which is 0x70000069
+    $BUILD_DIR/deposit \
+        --language english \
+        --non_interactive \
+        existing-mnemonic \
+        --num_validators $(expr $VALIDATOR_COUNT - $validator_count)\
+        --mnemonic="abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon abandon about" \
+        --validator_start_index $validator_count \
+        --chain kiln \
+        --keystore_password $(cat $ROOT/password) \
+        --folder $BUILD_DIR
+
+    echo "Done generating the credentials"
+fi
