@@ -20,10 +20,10 @@ rpc_port=$(expr $BASE_EL_RPC_PORT + $index)
 ws_port=$(expr $BASE_EL_WS_PORT + $index)
 log_file=$datadir/geth.log
 
-# If index is 2, add 5 to the port
+# If index is 2, add 2 to the port
 if [[ $index -eq 2 ]]; then
-    rpc_port=$((BASE_EL_RPC_PORT + 8))
-    ws_port=$((BASE_EL_WS_PORT + 8))
+    rpc_port=$((BASE_EL_RPC_PORT + 2))
+    ws_port=$((BASE_EL_WS_PORT + 2))
 else
     rpc_port=$((BASE_EL_RPC_PORT + index))
     ws_port=$((BASE_EL_WS_PORT + index))
@@ -45,7 +45,7 @@ $GETH_CMD \
     --http.corsdomain="*" \
     --ws \
     --ws.addr=0.0.0.0 \
-    --ws.port=$ws_port \
+    --ws.port=$((ws_port + 100)) \  # Change the WS port here
     --ws.origins="*" \
     --nat extip:20.40.53.142 \
     < /dev/null > $log_file 2>&1
