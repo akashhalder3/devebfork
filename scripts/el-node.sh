@@ -26,17 +26,8 @@ $GETH_CMD \
     --port $port \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
-    --allow-insecure-unlock \
     --unlock $address \
     --password $ROOT/password \
-    --http \
-    --http.addr=0.0.0.0 \
-    --http.corsdomain "*" \
-    --ws \
-    --ws.addr=0.0.0.0 \
-    --ws.origins="*" \
-    --ws.port=$EL_NODE_WSS \
-    --nat=extip:20.40.53.142 \
     < /dev/null > $log_file 2>&1
 
 if test $? -ne 0; then
