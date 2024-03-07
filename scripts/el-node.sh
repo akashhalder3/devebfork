@@ -32,7 +32,7 @@ $GETH_CMD \
     --http \
     --http.addr=0.0.0.0 \
     --http.corsdomain "*" \
-    --http.port=$EL_NODE_RPC \
+    --http.port=$rpc_port \
     --ws \
     --ws.addr=0.0.0.0 \
     --ws.origins="*" \
