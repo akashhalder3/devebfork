@@ -20,7 +20,7 @@ rpc_port=$(expr $BASE_EL_RPC_PORT + $index)
 http_port=$(expr $BASE_HTTP_PORT + $index)
 log_file=$datadir/geth.log
 
-echo "Started the geth node #$index which is now listening at port $port and rpc at port $rpc_port. You can see the log at $log_file"
+echo "Started the geth node #$index which is now listening at port $port and rpc at port $rpc_port with HTTP server at port $http_port. You can see the log at $log_file"
 $GETH_CMD \
     --datadir $datadir \
     --authrpc.port $rpc_port \
