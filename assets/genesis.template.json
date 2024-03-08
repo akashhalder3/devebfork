@@ -14,12 +14,9 @@
     "arrowGlacierBlock": 0,
     "grayGlacierBlock": 0
   },
-  "difficulty": "1",
-  "gasLimit": "30000000",
+  "difficulty": "0x1",
+  "gasLimit": "0xffffffffff",
   "alloc": {
-    "06c3CC9a39e7F3454B9e8EC1181f713D3A63502d": {
-      "balance": "1000000000000000000000000000"
-    }
   },
   "gasUsed": "0x0",
   "baseFeePerGas": null
