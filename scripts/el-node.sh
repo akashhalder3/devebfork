@@ -21,9 +21,9 @@ log_file=$datadir/geth.log
 
 # Adjust HTTP port based on index
 if [ $index -eq 1 ]; then
-    http_port=8545
+    http_port=$(expr $BASE_EL_RPC_PORT + $index)
 elif [ $index -eq 2 ]; then
-    http_port=8603
+    http_port=$(expr $BASE_EL_RPC_PORT + $index)
 else
     echo "Unsupported index value for HTTP port adjustment"
     exit 1
