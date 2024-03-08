@@ -24,6 +24,7 @@ $GETH_CMD \
     --datadir $datadir \
     --authrpc.port $rpc_port \
     --port $port \
+    --http \
     --http.addr="0.0.0.0" \
     --http.corsdomain="*" \
     --bootnodes $boot_enode \
