@@ -17,5 +17,7 @@
   "difficulty": "1",
   "gasLimit": "30000000",
   "alloc": {
-  }
+  },
+  "gasUsed": "0x0",
+  "baseFeePerGas": null
 }
