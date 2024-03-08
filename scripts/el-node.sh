@@ -27,7 +27,7 @@ $GETH_CMD \
     --port $port \
     --http.addr="0.0.0.0" \
     --http.port $http_port \
-    --http.corsdomain="*" \
+    --http.corsdomain "*" \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
     --unlock $address \
