@@ -16,14 +16,14 @@ el_data_dir $index
 datadir=$el_data_dir
 address=$(cat $datadir/address)
 port=$(expr $BASE_EL_PORT + $index)
-rpc_port=$(expr $BASE_EL_RPC_PORT + $index)
+# rpc_port=$(expr $BASE_EL_RPC_PORT + $index)
 log_file=$datadir/geth.log
 
 # Adjust HTTP port based on index
 if [ $index -eq 1 ]; then
-    http_port=$(expr $BASE_EL_RPC_PORT + $index)
+    http_port=8601
 elif [ $index -eq 2 ]; then
-    http_port=$(expr $BASE_EL_RPC_PORT + $index)
+    http_port=8602
 else
     echo "Unsupported index value for HTTP port adjustment"
     exit 1
