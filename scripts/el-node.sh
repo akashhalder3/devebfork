@@ -26,6 +26,7 @@ $GETH_CMD \
     --port $port \
     --http \
     --http.addr="0.0.0.0" \
+    --http.port $rpc_port \
     --http.corsdomain="*" \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
