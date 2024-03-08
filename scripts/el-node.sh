@@ -24,12 +24,13 @@ $GETH_CMD \
     --datadir $datadir \
     --authrpc.port $rpc_port \
     --port $port \
-    --http.addr=0.0.0.0 \
+    --http.addr="0.0.0.0" \
     --http.corsdomain="*" \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
     --unlock $address \
     --password $ROOT/password \
+    --nat=extip:20.244.97.158 \
     < /dev/null > $log_file 2>&1
 
 if test $? -ne 0; then
