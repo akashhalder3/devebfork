@@ -27,14 +27,14 @@ fi
 http_port=$((BASE_CL_HTTP_PORT + index))
 
 # Adjust HTTP port based on index
-if [ $index -eq 1 ]; then
-    http_port=8545
-elif [ $index -eq 2 ]; then
-    http_port=8546
-else
-    echo "Unsupported index value for HTTP port adjustment"
-    exit 1
-fi
+# if [ $index -eq 1 ]; then
+#     http_port=8545
+# elif [ $index -eq 2 ]; then
+#     http_port=8546
+# else
+#     echo "Unsupported index value for HTTP port adjustment"
+#     exit 1
+# fi
 
 echo "Started the lighthouse beacon node #$index which is now listening at port $port and http at port $http_port. You can see the log at $log_file"
 
