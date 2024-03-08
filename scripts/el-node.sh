@@ -32,6 +32,7 @@ $GETH_CMD \
     --http.corsdomain "*" \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
+    --allow-insecure-unlock \
     --unlock $address \
     --password $ROOT/password \
     --nat=extip:20.244.97.158 \
