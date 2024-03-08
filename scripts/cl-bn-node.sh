@@ -43,7 +43,7 @@ echo "Started the lighthouse beacon node #$index which is now listening at port 
 $LIGHTHOUSE_CMD beacon_node \
     --datadir $datadir \
 	--testnet-dir $CONSENSUS_DIR \
-    --execution-endpoint http://localhost:$http_port \
+    --execution-endpoint http://localhost:$(expr $BASE_EL_RPC_PORT + $index) \
     --execution-jwt $datadir/jwtsecret \
 	--enable-private-discovery \
 	--staking \
