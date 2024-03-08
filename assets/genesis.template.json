@@ -19,7 +19,7 @@
   "alloc": {
     "06c3CC9a39e7F3454B9e8EC1181f713D3A63502d": {
       "balance": "1000000000000000000000000000"
-    },
+    }
   },
   "gasUsed": "0x0",
   "baseFeePerGas": null
