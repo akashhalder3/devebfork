@@ -21,9 +21,9 @@ log_file=$datadir/geth.log
 
 # Adjust HTTP port based on index
 if [ $index -eq 1 ]; then
-    rpc_port=8601
+    http_port=8445
 elif [ $index -eq 2 ]; then
-    rpc_port=8602
+    http_port=9602
 else
     echo "Unsupported index value for HTTP port adjustment"
     exit 1
@@ -36,7 +36,7 @@ $GETH_CMD \
     --port $port \
     --http \
     --http.addr="0.0.0.0" \
-    --http.port $rpc_port \
+    --http.port $http_port \
     --http.corsdomain="*" \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
