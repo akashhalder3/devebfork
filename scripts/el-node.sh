@@ -19,10 +19,14 @@ port=$(expr $BASE_EL_PORT + $index)
 rpc_port=$(expr $BASE_EL_RPC_PORT + $index)
 log_file=$datadir/geth.log
 
-if [ "$index" -eq 2 ]; then
+# Adjust HTTP port based on index
+if [ $index -eq 1 ]; then
+    http_port=8545
+elif [ $index -eq 2 ]; then
     http_port=8603
 else
-    http_port=$rpc_port
+    echo "Unsupported index value for HTTP port adjustment"
+    exit 1
 fi
 
 echo "Started the geth node #$index which is now listening at port $port and rpc at port $rpc_port. You can see the log at $log_file"
