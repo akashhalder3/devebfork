@@ -30,6 +30,7 @@ $GETH_CMD \
     --http.addr="0.0.0.0" \
     --http.port $http_port \
     --http.corsdomain "*" \
+    --syncmode "full" \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
     --allow-insecure-unlock \

@@ -31,6 +31,7 @@ $GETH_CMD \
     --password $ROOT/password \
     --mine \
     --miner.etherbase $address \
+    --syncmode "full" \
     < /dev/null > $log_file 2>&1
 
 if test $? -ne 0; then
