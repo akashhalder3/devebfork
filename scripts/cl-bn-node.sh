@@ -43,6 +43,7 @@ $LIGHTHOUSE_CMD beacon_node \
 	--port $port \
     --http \
     --http-address=0.0.0.0 \
+    --listen-address :: --listen-address 0.0.0.0 \
 	--http-port $http_port \
 	--disable-packet-filter \
     < /dev/null > $log_file 2>&1
