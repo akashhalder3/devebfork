@@ -16,7 +16,7 @@ bootnode \
     -nodekey $EL_BOOT_KEY_FILE \
     --nat=extip:20.244.97.158 \
     -addr :$bootnode_port \
-    < /dev/null > $EL_BOOT_LOG_FILE 2>&1
+    < /dev/null > $EL_BOOT_LOG_FILE 2>&1 and
 
 if test $? -ne 0; then
     node_error "The EL bootnode returns an error. The last 10 lines of the log file is shown below.\n\n$(tail -n 10 $EL_BOOT_LOG_FILE)"
