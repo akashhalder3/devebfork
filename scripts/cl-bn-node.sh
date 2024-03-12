@@ -42,6 +42,7 @@ $LIGHTHOUSE_CMD beacon_node \
 	--enr-tcp-port $port \
 	--port $port \
     --http \
+    --http-address=0.0.0.0 \
 	--http-port $http_port \
 	--disable-packet-filter \
     < /dev/null > $log_file 2>&1
