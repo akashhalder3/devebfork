@@ -38,7 +38,7 @@ $LIGHTHOUSE_CMD beacon_node \
 	--enable-private-discovery \
 	--staking \
 	--enr-address 127.0.0.1 \
-    --enr-address 20.40.53.142 \
+    --enr-address 0.0.0.0 \
 	--enr-udp-port $port \
 	--enr-tcp-port $port \
 	--port $port \
