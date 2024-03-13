@@ -57,14 +57,14 @@ echo "Generated $CONFIG_FILE"
 
 lcli eth1-genesis \
     --spec $PRESET_BASE \
-    --eth1-endpoints http://localhost:$SIGNER_HTTP_PORT \
+    --eth1-endpoints http://0.0.0.0:$SIGNER_HTTP_PORT \
     --testnet-dir $CONSENSUS_DIR 2>/dev/null
 
 echo "Generated $CONSENSUS_DIR/genesis.ssz"
 
 lcli \
 	generate-bootnode-enr \
-	--ip 127.0.0.1 \
+	--ip 0.0.0.0 \
 	--udp-port $CL_BOOTNODE_PORT \
 	--tcp-port $CL_BOOTNODE_PORT \
 	--genesis-fork-version $GENESIS_FORK_VERSION \
