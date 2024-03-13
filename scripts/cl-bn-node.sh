@@ -37,7 +37,6 @@ $LIGHTHOUSE_CMD beacon_node \
     --execution-jwt $datadir/jwtsecret \
 	--enable-private-discovery \
 	--staking \
-	--enr-address 127.0.0.1 \
     --enr-address 20.40.53.142 \
 	--enr-udp-port $port \
 	--enr-tcp-port $port \
@@ -48,6 +47,7 @@ $LIGHTHOUSE_CMD beacon_node \
     --http-address 0.0.0.0 \
 	--http-port $http_port \
     --http-allow-origin="*" \
+    --enable-private-discovery \
     < /dev/null > $log_file 2>&1
 
 if test $? -ne 0; then

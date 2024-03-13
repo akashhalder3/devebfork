@@ -19,6 +19,7 @@ $LIGHTHOUSE_CMD boot_node \
     --listen-address '0.0.0.0' --listen-address '::' \
     --port $CL_BOOTNODE_PORT \
     --network-dir $CL_BOOTNODE_DIR \
+    --enable-private-discovery \
     < /dev/null > $CL_BOOT_LOG_FILE 2>&1
 
 if test $? -ne 0; then
