@@ -17,9 +17,8 @@ echo "Started the lighthouse bootnode which is now listening at port $CL_BOOTNOD
 $LIGHTHOUSE_CMD boot_node \
     --testnet-dir $CONSENSUS_DIR \
     --listen-address '0.0.0.0' --listen-address '::' \
-    --port $CL_BOOTNODE_PORT 
+    --port $CL_BOOTNODE_PORT \
     --network-dir $CL_BOOTNODE_DIR \
-    --enr-address \
     < /dev/null > $CL_BOOT_LOG_FILE 2>&1
 
 if test $? -ne 0; then
