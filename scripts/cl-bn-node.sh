@@ -14,6 +14,7 @@ index=$1
 cl_data_dir $index
 datadir=$cl_data_dir
 port=$(expr $BASE_CL_PORT + $index)
+qport=$(expr $QUIC_CL_PORT + $index)
 http_port=$(expr $BASE_CL_HTTP_PORT + $index)
 log_file=$datadir/beacon_node.log
 
@@ -31,22 +32,27 @@ echo "Started the lighthouse beacon node #$index which is now listening at port 
 # --disable-packet-filter is necessary because it's involed in rate limiting and nodes per IP limit
 # See https://github.com/sigp/discv5/blob/v0.1.0/src/socket/filter/mod.rs#L149-L186
 $LIGHTHOUSE_CMD beacon_node \
+    --debug-level=info \
     --datadir $datadir \
 	--testnet-dir $CONSENSUS_DIR \
+    --enr-address 20.40.53.142 \
+    --enr-udp-port $port \
+	--enr-tcp-port $port \
+    --enr-quic-port $qport \
+    --listen-address=0.0.0.0 \
+    --http \
+    --http-address 0.0.0.0 \
+    --http-port $http_port \
+    --http-allow-origin="*" \
+    --port $port \
+    --http-allow-sync-stalled \
+    --subscribe-all-subnets \
+    --import-all-attestations \
+    --disable-peer-scoring \
     --execution-endpoint http://localhost:$(expr $BASE_EL_RPC_PORT + $index) \
     --execution-jwt $datadir/jwtsecret \
-	--enable-private-discovery \
 	--staking \
-    --enr-address 103.76.122.123 \
-	--enr-udp-port $port \
-	--enr-tcp-port $port \
-	--port $port \
-    --http \
-    --eth1 \
     --gui \
-    --http-address 0.0.0.0 \
-	--http-port $http_port \
-    --http-allow-origin="*" \
     < /dev/null > $log_file 2>&1
 
 if test $? -ne 0; then

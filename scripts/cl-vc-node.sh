@@ -19,6 +19,7 @@ echo "Started the lighthouse validator client #$index. You can see the log at $l
 
 # Send all the fee to the PoA signer
 $LIGHTHOUSE_CMD validator_client \
+    --debug-level=info \
     --datadir $datadir \
 	--testnet-dir $CONSENSUS_DIR \
 	--init-slashing-protection \

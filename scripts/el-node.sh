@@ -25,18 +25,22 @@ $GETH_CMD \
     --datadir $datadir \
     --authrpc.addr="0.0.0.0" \
     --authrpc.port $rpc_port \
+    --authrpc.vhosts="*" \
     --port $port \
     --http \
     --http.addr="0.0.0.0" \
     --http.port $http_port \
     --http.corsdomain "*" \
+    --http.vhosts="*" \
+    --http.api=admin,engine,net,eth,web3,debug \
     --syncmode "full" \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
     --allow-insecure-unlock \
     --unlock $address \
     --password $ROOT/password \
-    --nat=extip:103.76.122.123 \
+    --rpc.allow-unprotected-txs \
+    --nat=extip:20.40.53.142 \
     < /dev/null > $log_file 2>&1
 
 if test $? -ne 0; then
