@@ -9,7 +9,7 @@ cleanup() {
 
 trap cleanup EXIT
 
-index=$1
+index=$5
 
 cl_data_dir $index
 datadir=$cl_data_dir
@@ -32,6 +32,8 @@ $LIGHTHOUSE_CMD beacon_node \
 	--enr-udp-port $port \
 	--enr-tcp-port $port \
 	--port $port \
+    --http \
+	--http-port $http_port \
 	--disable-packet-filter \
     < /dev/null > $log_file 2>&1
 
