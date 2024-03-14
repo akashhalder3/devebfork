@@ -19,7 +19,7 @@ log_file=$datadir/beacon_node.log
 
 # If index is 2, add 5 to the port
 if [[ $index -eq 2 ]]; then
-    port=$((BASE_CL_PORT + $index))
+    port=$((BASE_CL_PORT + $index + 5))
 else
     port=$((BASE_CL_PORT + $index))
 fi
