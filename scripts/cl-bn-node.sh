@@ -17,6 +17,12 @@ port=$((BASE_CL_PORT + index))
 http_port=$((BASE_CL_HTTP_PORT + index))
 log_file=$datadir/beacon_node.log
 
+# Check if ports are already in use
+if lsof -Pi :$port -sTCP:LISTEN -t >/dev/null || lsof -Pi :$http_port -sTCP:LISTEN -t >/dev/null; then
+    echo "Ports $port or $http_port are already in use. Exiting."
+    exit 1
+fi
+
 echo "Started the lighthouse beacon node #$index which is now listening at port $port and http at port $http_port. You can see the log at $log_file"
 
 # --disable-packet-filter is necessary because it's involved in rate limiting and nodes per IP limit
