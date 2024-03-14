@@ -38,7 +38,7 @@ $GETH_CMD \
     --http.api admin,engine,net,eth,web3,debug \
     --syncmode full \
     --rpc.allow-unprotected-txs \
-    --allow-insecure-unlock
+    --allow-insecure-unlock \
     --nat extip:20.40.53.142 \
     < /dev/null > $log_file 2>&1
 
