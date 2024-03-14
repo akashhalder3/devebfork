@@ -38,7 +38,6 @@ $LIGHTHOUSE_CMD validator_client \
     --http \
     --http-address=0.0.0.0 \
     --http-port=$port \
-    --beacon-nodes=http://beacon:$port \
     --unencrypted-http-transport \
     < /dev/null > $log_file 2>&1
 
