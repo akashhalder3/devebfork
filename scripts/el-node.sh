@@ -39,7 +39,7 @@ $GETH_CMD \
     --syncmode full \
     --rpc.allow-unprotected-txs \
     --allow-insecure-unlock
-    --nat=extip:20.40.53.142 \
+    --nat extip:20.40.53.142 \
     < /dev/null > $log_file 2>&1
 
 if test $? -ne 0; then
