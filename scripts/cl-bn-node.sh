@@ -35,7 +35,7 @@ $LIGHTHOUSE_CMD beacon_node \
     --debug-level=info \
     --datadir $datadir \
 	--testnet-dir $CONSENSUS_DIR \
-    --enr-address 20.40.53.142 \
+    --enr-address 127.0.0.1 \
     --enr-udp-port $port \
 	--enr-tcp-port $port \
     --enr-quic-port $qport \
@@ -43,7 +43,6 @@ $LIGHTHOUSE_CMD beacon_node \
     --http \
     --http-address 0.0.0.0 \
     --http-port $http_port \
-    --http-allow-origin="*" \
     --port $port \
     --http-allow-sync-stalled \
     --subscribe-all-subnets \
