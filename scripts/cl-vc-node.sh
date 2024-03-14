@@ -13,6 +13,16 @@ index=$1
 
 cl_data_dir $index
 datadir=$cl_data_dir
+
+http_port=$(expr $BASE_CL_HTTP_PORT + $index)
+# If index is 2, add 5 to the port
+if [[ $index -eq 2 ]]; then
+    port=$((BASE_CL_PORT + 5))
+else
+    port=$((BASE_CL_PORT + index))
+fi
+
+http_port=$((BASE_CL_HTTP_PORT + index))
 log_file=$datadir/validator_client.log
 
 echo "Started the lighthouse validator client #$index. You can see the log at $log_file"
@@ -25,8 +35,7 @@ $LIGHTHOUSE_CMD validator_client \
 	--init-slashing-protection \
     --beacon-nodes http://0.0.0.0:$(expr $BASE_CL_HTTP_PORT + $index) \
     --suggested-fee-recipient $(cat $SIGNER_EL_DATADIR/address) \
-    --http \
-    --http-address=0.0.0.0 \
+    --beacon-nodes=http://beacon:$port \
     --unencrypted-http-transport \
     < /dev/null > $log_file 2>&1
 

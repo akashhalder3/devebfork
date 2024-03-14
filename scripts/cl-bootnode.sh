@@ -9,6 +9,7 @@ cleanup() {
 
 trap cleanup EXIT
 
+
 # Start the boot node
 echo "Started the lighthouse bootnode which is now listening at port $CL_BOOTNODE_PORT"
 
