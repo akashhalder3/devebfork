@@ -17,30 +17,17 @@ datadir=$el_data_dir
 address=$(cat $datadir/address)
 port=$(expr $BASE_EL_PORT + $index)
 rpc_port=$(expr $BASE_EL_RPC_PORT + $index)
-http_port=$(expr $BASE_HTTP_PORT + $index)
 log_file=$datadir/geth.log
 
-echo "Started the geth node #$index which is now listening at port $port and rpc at port $rpc_port with HTTP server at port $http_port. You can see the log at $log_file"
+echo "Started the geth node #$index which is now listening at port $port and rpc at port $rpc_port. You can see the log at $log_file"
 $GETH_CMD \
     --datadir $datadir \
-    --authrpc.addr="0.0.0.0" \
     --authrpc.port $rpc_port \
-    --authrpc.vhosts="*" \
     --port $port \
-    --http \
-    --http.addr="0.0.0.0" \
-    --http.port $http_port \
-    --http.corsdomain "*" \
-    --http.vhosts="*" \
-    --http.api=admin,engine,net,eth,web3,debug \
-    --syncmode "full" \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
-    --allow-insecure-unlock \
     --unlock $address \
     --password $ROOT/password \
-    --rpc.allow-unprotected-txs \
-    --nat=extip:20.40.53.142 \
     < /dev/null > $log_file 2>&1
 
 if test $? -ne 0; then

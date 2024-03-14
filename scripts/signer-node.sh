@@ -21,17 +21,13 @@ $GETH_CMD \
     --authrpc.port $SIGNER_RPC_PORT \
     --port $SIGNER_PORT \
     --http \
-    --http.addr=0.0.0.0 \
     --http.port $SIGNER_HTTP_PORT \
-    --http.corsdomain="*" \
     --allow-insecure-unlock \
     --bootnodes $boot_enode \
     --networkid $NETWORK_ID \
     --unlock $address \
     --password $ROOT/password \
     --mine \
-    --miner.etherbase $address \
-    --syncmode "full" \
     < /dev/null > $log_file 2>&1
 
 if test $? -ne 0; then

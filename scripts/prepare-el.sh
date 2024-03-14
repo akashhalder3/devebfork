@@ -33,7 +33,6 @@ zeroes() {
         echo -n "0"
     done
 }
-
 address=$(cat $SIGNER_EL_DATADIR/address)
 extra_data="0x$(zeroes 64)${address:2}$(zeroes 130)"
 genesis=$(echo $genesis | jq ". + { \"extradata\": \"$extra_data\" }")

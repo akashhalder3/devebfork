@@ -9,7 +9,6 @@ cleanup() {
 
 trap cleanup EXIT
 
-
 # Start the boot node
 echo "Started the lighthouse bootnode which is now listening at port $CL_BOOTNODE_PORT"
 
@@ -17,8 +16,9 @@ echo "Started the lighthouse bootnode which is now listening at port $CL_BOOTNOD
 # See https://github.com/sigp/discv5/blob/v0.1.0/src/socket/filter/mod.rs#L149-L186
 $LIGHTHOUSE_CMD boot_node \
     --testnet-dir $CONSENSUS_DIR \
-    --listen-address '0.0.0.0' --listen-address '::' \
     --port $CL_BOOTNODE_PORT \
+    --listen-address 127.0.0.1 \
+	--disable-packet-filter \
     --network-dir $CL_BOOTNODE_DIR \
     < /dev/null > $CL_BOOT_LOG_FILE 2>&1
 

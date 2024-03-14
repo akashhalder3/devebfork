@@ -22,7 +22,7 @@ $LIGHTHOUSE_CMD validator_client \
     --datadir $datadir \
 	--testnet-dir $CONSENSUS_DIR \
 	--init-slashing-protection \
-    --beacon-nodes http://0.0.0.0:$(expr $BASE_CL_HTTP_PORT + $index) \
+    --beacon-nodes http://localhost:$(expr $BASE_CL_HTTP_PORT + $index) \
     --suggested-fee-recipient $(cat $SIGNER_EL_DATADIR/address) \
     < /dev/null > $log_file 2>&1
 

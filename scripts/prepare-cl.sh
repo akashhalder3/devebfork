@@ -57,7 +57,7 @@ echo "Generated $CONFIG_FILE"
 
 lcli eth1-genesis \
     --spec $PRESET_BASE \
-    --eth1-endpoints http://0.0.0.0:$SIGNER_HTTP_PORT \
+    --eth1-endpoints http://localhost:$SIGNER_HTTP_PORT \
     --testnet-dir $CONSENSUS_DIR 2>/dev/null
 
 echo "Generated $CONSENSUS_DIR/genesis.ssz"
