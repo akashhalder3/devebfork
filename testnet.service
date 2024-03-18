@@ -5,7 +5,6 @@ After=network.target
 [Service]
 User=azureuser
 Group=azureuser
-WorkingDirectory=/home/azureuser/devebfork
 ExecStart=/bin/bash /home/azureuser/devebfork/testnet.sh
 Restart=always
 RestartSec=3
