@@ -18,6 +18,7 @@ address=$(cat $datadir/address)
 port=$(expr $BASE_EL_PORT + $index)
 rpc_port=$(expr $BASE_EL_RPC_PORT + $index)
 http_port=$(expr $BASE_EL_HTTP_PORT + $index)
+ws_port=$(expr $BASE_EL_WS_PORT + $index)
 log_file=$datadir/geth.log
 
 echo "Started the geth node #$index which is now listening at port $port and rpc at port $rpc_port. You can see the log at $log_file"
@@ -36,6 +37,9 @@ $GETH_CMD \
     --http.port $http_port \
     --http.corsdomain "*" \
     --http.api admin,engine,net,eth,web3,debug \
+    --ws \
+    --ws.addr=0.0.0.0 \
+    --ws.port= $ws_port \
     --syncmode full \
     --rpc.allow-unprotected-txs \
     --allow-insecure-unlock \
