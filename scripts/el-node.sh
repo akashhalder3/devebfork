@@ -39,7 +39,6 @@ $GETH_CMD \
     --http.api admin,engine,net,eth,web3,debug \
     --ws \
     --ws.addr "0.0.0.0" \
-    --ws.port $ws_port \
     --syncmode full \
     --rpc.allow-unprotected-txs \
     --allow-insecure-unlock \
