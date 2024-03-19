@@ -54,9 +54,9 @@ if ! ./scripts/prepare-el.sh; then
     echo -e "\n*Failed!* in the execution layer preparation step\n"
     exit 1
 fi
-
 ./scripts/el-bootnode.sh &
 bootnode_pid=$!
+
 # Keep reading until we can parse the boot enode
 while true; do
     if ! ps p $bootnode_pid >/dev/null; then
@@ -84,7 +84,6 @@ if ! ./scripts/prepare-cl.sh; then
     echo -e "\n*Failed!* in the consensus layer preparation step\n"
     exit 1
 fi
-
 ./scripts/cl-bootnode.sh &
 
 for (( node=1; node<=$NODE_COUNT; node++ )); do
@@ -92,4 +91,4 @@ for (( node=1; node<=$NODE_COUNT; node++ )); do
     ./scripts/cl-vc-node.sh $node &
 done
 
-# wait -n
+wait -n
